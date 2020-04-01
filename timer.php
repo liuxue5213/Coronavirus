@@ -16,6 +16,6 @@ $oc = new OtherCountry();
 $data = $oc->index();
 var_dump('info refresh success');
 
-$baidu = new Baidu();
-$data = $oc->baidu();
-var_dump('info refresh success');
+// $baidu = new Baidu();
+// $data = $oc->baidu();
+// var_dump('info refresh success');

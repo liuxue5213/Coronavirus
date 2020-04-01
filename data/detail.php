@@ -1,6 +1,7 @@
 <?php
-require_once './get.php';
-require_once './other.php';
+require_once 'get.php';
+require_once 'other.php';
+
 //header("Access-Control-Allow-Origin：http://34.80.195.241");
 $tmpArr = $info = array();
 $country = isset($_REQUEST['country']) && $_REQUEST['country']? $_REQUEST['country'] : '';
