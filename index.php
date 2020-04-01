@@ -13,11 +13,11 @@ $nav = isset($_REQUEST['nav']) ? $_REQUEST['nav']: '';
         <title>COVID-19 CORONAVIRUS PANDEMIC</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <link rel="Shortcut Icon" href="./images/favicon.ico" type="image/x-icon" />
-        <link rel="stylesheet" href="../bootstrap/bootstrap-table-master/dist/foundation.min.css" integrity="sha256-xpOKVlYXzQ3P03j397+jWFZLMBXLES3IiryeClgU5og= sha384-gP4DhqyoT9b1vaikoHi9XQ8If7UNLO73JFOOlQV1RATrA7D0O7TjJZifac6NwPps sha512-AKwIib1E+xDeXe0tCgbc9uSvPwVYl6Awj7xl0FoaPFostZHOuDQ1abnDNCYtxL/HWEnVOMrFyf91TDgLPi9pNg==" crossorigin="anonymous">
+        <link rel="stylesheet" href="js/bootstrap-table-master/dist/foundation.min.css" integrity="sha256-xpOKVlYXzQ3P03j397+jWFZLMBXLES3IiryeClgU5og= sha384-gP4DhqyoT9b1vaikoHi9XQ8If7UNLO73JFOOlQV1RATrA7D0O7TjJZifac6NwPps sha512-AKwIib1E+xDeXe0tCgbc9uSvPwVYl6Awj7xl0FoaPFostZHOuDQ1abnDNCYtxL/HWEnVOMrFyf91TDgLPi9pNg==" crossorigin="anonymous">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-        <link rel="stylesheet" href="../bootstrap/bootstrap-table-master/dist/themes/foundation/bootstrap-table-foundation.min.css">
-<!--	<link rel="stylesheet" href="../bootstrap/bootstrap-table-master/dist/bootstrap-table.min.css">-->
-<!--    <link rel="stylesheet" href="../bootstrap/bootstrap-table-master/dist/themes/semantic/bootstrap-table-semantic.min.css">-->
+        <link rel="stylesheet" href="js/bootstrap-table-master/dist/themes/foundation/bootstrap-table-foundation.min.css">
+<!--	<link rel="stylesheet" href="js/bootstrap-table-master/dist/bootstrap-table.min.css">-->
+<!--    <link rel="stylesheet" href="js/bootstrap-table-master/dist/themes/semantic/bootstrap-table-semantic.min.css">-->
 <!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">-->
         <style>
             .title{font-size: 26px;}
@@ -90,18 +90,18 @@ $nav = isset($_REQUEST['nav']) ? $_REQUEST['nav']: '';
           </tr>
           </thead>
         </table>
-        <script src="../bootstrap/jquery-3.3.1.min.js"></script>
+        <script src="js/jquery-3.3.1.min.js"></script>
 <!--        <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>-->
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-        <script src="../bootstrap/bootstrap-table-master/dist/bootstrap-table.min.js"></script>
-        <script src="../bootstrap/bootstrap-table-master/dist/foundation.min.js" integrity="sha256-/PFxCnsMh+nTuM0k3VJCRch1gwnCfKjaP8rJNq5SoBg= sha384-9ksAFjQjZnpqt6VtpjMjlp2S0qrGbcwF/rvrLUg2vciMhwc1UJJeAAOLuJ96w+Nj sha512-UMSn6RHqqJeJcIfV1eS2tPKCjzaHkU/KqgAnQ7Nzn0mLicFxaVhm9vq7zG5+0LALt15j1ljlg8Fp9PT1VGNmDw==" crossorigin="anonymous"></script>
-        <script src="../bootstrap/bootstrap-table-master/dist/extensions/auto-refresh/bootstrap-table-auto-refresh.min.js"></script>
+        <script src="js/bootstrap-table-master/dist/bootstrap-table.min.js"></script>
+        <script src="js/bootstrap-table-master/dist/foundation.min.js" integrity="sha256-/PFxCnsMh+nTuM0k3VJCRch1gwnCfKjaP8rJNq5SoBg= sha384-9ksAFjQjZnpqt6VtpjMjlp2S0qrGbcwF/rvrLUg2vciMhwc1UJJeAAOLuJ96w+Nj sha512-UMSn6RHqqJeJcIfV1eS2tPKCjzaHkU/KqgAnQ7Nzn0mLicFxaVhm9vq7zG5+0LALt15j1ljlg8Fp9PT1VGNmDw==" crossorigin="anonymous"></script>
+        <script src="js/bootstrap-table-master/dist/extensions/auto-refresh/bootstrap-table-auto-refresh.min.js"></script>
 <!--        <script src="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.js"></script>-->
-        <script src="../bootstrap/bootstrap-table-master/dist/themes/foundation/bootstrap-table-foundation.js"></script>
+        <script src="js/bootstrap-table-master/dist/themes/foundation/bootstrap-table-foundation.js"></script>
 <!--        <script src="https://unpkg.com/bootstrap-table@1.16.0/dist/themes/foundation/bootstrap-table-foundation.min.js"></script>-->
-        <script src="../bootstrap/bootstrap-table-master/dist/extensions/print/bootstrap-table-print.min.js"></script>
-<!--    <script src="../bootstrap/bootstrap-table-master/dist/themes/semantic/bootstrap-table-semantic.min.js"></script>-->
+        <script src="js/bootstrap-table-master/dist/extensions/print/bootstrap-table-print.min.js"></script>
+<!--    <script src="js/bootstrap-table-master/dist/themes/semantic/bootstrap-table-semantic.min.js"></script>-->
       <script>
           $(function() {
               $('#table').bootstrapTable()
