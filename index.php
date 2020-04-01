@@ -46,6 +46,9 @@ $nav = isset($_REQUEST['nav']) ? $_REQUEST['nav']: '';
                     <li class="nav-item <?php echo $nav == 'map' ? 'active': '';?>">
                         <a class="nav-link text-white" href="wiki.php?nav=wiki"><b>Wiki</b></a>
                     </li>
+                    <li class="nav-item <?php echo $nav == 'baidu' ? 'active': '';?>">
+                        <a class="nav-link text-white" href="baidu.php?nav=baidu"><b>Baidu</b></a>
+                    </li>
                     <li class="nav-item <?php echo $nav == 'about' ? 'active': '';?>">
                         <a class="nav-link text-white" href="about.php?nav=about"><b>About</b></a>
                     </li>

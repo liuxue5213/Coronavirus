@@ -16,6 +16,6 @@ require_once 'baidu/get.php';
 // $data = $oc->index();
 // var_dump('info refresh success');
 
-// $baidu = new Baidu();
-// $data = $oc->baidu();
-// var_dump('info refresh success');
+$baidu = new Baidu();
+$data = $baidu->index();
+var_dump('info refresh success');

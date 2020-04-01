@@ -1,11 +1,19 @@
 <?php
+// header("Access-Control-Allow-Origin：http://34.80.195.241");
+require_once 'baidu/get.php';
 $nav = isset($_REQUEST['nav']) ? $_REQUEST['nav']: '';
+$baidu = new Baidu();
+$data = $baidu->index();
+$trumpet = isset($data['trumpet']) ? $data['trumpet'] : array();
+// print_r($data);
+// die;
+
+
 ?>
 <!doctype html>
 <html lang="en">
     <head>
         <meta charset="utf-8">
-
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>COVID-19 CORONAVIRUS PANDEMIC</title>
         <link rel="Shortcut Icon" href="./images/favicon.ico" type="image/x-icon" />
@@ -13,6 +21,8 @@ $nav = isset($_REQUEST['nav']) ? $_REQUEST['nav']: '';
         <style>
             .title{font-size: 26px;}
             .t1{padding-left: 65px;}
+            .bgc{background-color: #445175;}
+            .center{text-align: center;}
         </style>
     </head>
     <body>
@@ -46,19 +56,28 @@ $nav = isset($_REQUEST['nav']) ? $_REQUEST['nav']: '';
                 </ul>
             </div>
         </nav>
-        <h2 style="text-align: center;">COVID-19 CORONAVIRUS PANDEMIC</h2>
-        <h4>This map is ran by BNO News, however I am working on a new map that will be out by the end of the week! Thank you for waiting, the new version will be synced with the data page and allow for more information to be displayed. - Avi</h4>
-        <p>需要可以访问google map 才可以正常加载</p>
-        <iframe id="mainContent" width="100%" height="850px;" src="https://www.google.com/maps/d/embed?mid=1a04iBi41DznkMaQRnICO40ktROfnMfMx" allowfullscreen></iframe>
-        <script>
-            // reSetSize();
-            // window.onresize = reSetSize;
-            // function reSetSize() {
-            //     var windowsHeight = window.innerHeight;
-            //     document.getElementById("mainContent").style.height = (windowsHeight-框架顶部高度) + "px";
-            // }
-        </script>
-    </body>
+        <h1 style="text-align: center; padding: 15px; font-weight: bolder;">
+            <img src="https://mms-res.cdn.bcebos.com/voicefe/captain/images/1b9ddd53f65d1b3a4faeca959e15d425c8d85d2f?120*40">
+            <span style="margin-top: 5px;color:#F23F40">百度抗击肺炎专题</span>
+        </h1>
+
+        <!-- <h3>数据来自官方通报 全国与各省通报数据可能存在差异</h3> -->
+        <h3>数据更新至：<?php echo $data['mapLastUpdatedTime'];?></h3>
+
+        <!-- 公告消息 -->
+        <div>
+            <h2 class="center">公告消息</h2>
+            <?php if ($trumpet) { 
+                foreach ($trumpet as $val) { ?>
+                <h4><?php echo $val['title'];?></h4>
+                <p>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $val['content'];?>
+                </p>
+            <?php } } ?>
+        </div>
+
+        
+  </body>
 </html>
 
 
