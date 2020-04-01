@@ -1,6 +1,6 @@
 <?php
 // header("Access-Control-Allow-Origin：http://34.80.195.241");
-$info = file_get_contents('http://34.80.195.241/Coronavirus/data/2.php');
+$info = file_get_contents('http://34.80.195.241/Coronavirus/2.php');
 $info = json_decode($info, true);
 $nav = isset($_REQUEST['nav']) ? $_REQUEST['nav']: '';
 
@@ -69,7 +69,7 @@ $nav = isset($_REQUEST['nav']) ? $_REQUEST['nav']: '';
               data-show-refresh="true"
               data-auto-refresh="true"
               data-pagination="false"
-              data-url="http://34.80.195.241/Coronavirus/data/1.php"
+              data-url="http://34.80.195.241/Coronavirus/1.php"
               data-side-pagination="server"
               data-show-print="true"
               data-header-style="headerStyle"
