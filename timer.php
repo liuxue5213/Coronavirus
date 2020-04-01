@@ -1,7 +1,7 @@
 <?php
-require_once './data/get.php';
-require_once './data/corona.php';
-require_once './data/other.php';
+require_once '../data/get.php';
+require_once '../data/corona.php';
+require_once '../data/other.php';
 require_once 'baidu/get.php';
 
 // $corona = new Corona();
