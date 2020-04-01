@@ -5,8 +5,8 @@
  * @Last Modified by:   anchen
  * @Last Modified time: 2020-04-01 14:51:15
  */
-require_once '../common/redis.php';
-require_once '../common/checkIp.php';
+require_once './common/redis.php';
+require_once './common/checkIp.php';
 require_once 'corona.php';
 
 $config = array(

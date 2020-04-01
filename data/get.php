@@ -5,15 +5,13 @@
  * @Last Modified by:   anchen
  * @Last Modified time: 2020-04-01 17:47:41
  */
-require_once '../common/QueryList.php';
-require_once '../common/phpQuery.php';
-require_once '../common/redis.php';
-
+require_once './common/QueryList.php';
+require_once './common/phpQuery.php';
+require_once './common/redis.php';
 // require 'QueryList/src/QueryList.php';
 // require 'vendor/autoload.php';
 use QL\QueryList;
 // composer require jaeger/querylist:V3.2.1
-
 class Corona {
     public function index($return = false)
     {

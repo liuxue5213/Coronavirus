@@ -5,9 +5,9 @@
  * @Last Modified by:   anchen
  * @Last Modified time: 2020-04-01 10:00:52
  */
-require_once '../common/QueryList.php';
-require_once '../common/phpQuery.php';
-require_once '../common/redis.php';
+require_once './common/QueryList.php';
+require_once './common/phpQuery.php';
+require_once './common/redis.php';
 use QL\QueryList;
 
 class OtherCountry {
