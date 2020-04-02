@@ -11,8 +11,6 @@ require_once './common/redis.php';
 require_once './common/curl.php';
 use QL\QueryList;
 
-//https://mms-res.cdn.bcebos.com/voicefe/captain/images/be3a8f01a533fc60dcb457d60fda3fec479281d3?160*50 logo white
-//https://mms-res.cdn.bcebos.com/voicefe/captain/images/1b9ddd53f65d1b3a4faeca959e15d425c8d85d2f?117*38  red-blue logo
 class Baidu
 {
     protected $key = 'baidu';
@@ -64,13 +62,13 @@ class Baidu
                     // $result['foreignLastUpdatedTime'] = isset($tmpArr['component'][0]['foreignLastUpdatedTime']) ? $tmpArr['component'][0]['foreignLastUpdatedTime'] : '';
 
                     //国内情况
-                    if ($tmpArr['summaryDataIn'][0]['summaryDataIn']) {
+                    if ($tmpArr['component'][0]['summaryDataIn']) {
                         $redis->hSet($this->key, 'summaryDataIn', serialize($tmpArr['component'][0]['summaryDataIn']));
                     }
                     // $result['summaryDataIn'] = isset($tmpArr['component'][0]['summaryDataIn']) ? $tmpArr['component'][0]['summaryDataIn'] : '';
 
                     //国外情况
-                    if ($tmpArr['summaryDataOut'][0]['summaryDataOut']) {
+                    if ($tmpArr['component'][0]['summaryDataOut']) {
                         $redis->hSet($this->key, 'summaryDataOut', serialize($tmpArr['component'][0]['summaryDataOut']));
                     }
                     // $result['summaryDataOut'] = isset($tmpArr['component'][0]['summaryDataOut']) ? $tmpArr['component'][0]['summaryDataOut'] : '';
@@ -80,32 +78,11 @@ class Baidu
                     // $result['realtime_data'] = $this->getRealtimeData(sprintf($this->realUrl, '肺炎', time()*1000));
                     $redis->hSet($this->key, 'foreign_realtime_data', serialize($this->getRealtimeData(sprintf($this->realUrl, '新冠肺炎国外疫情', time()*1000))));
                     // $result['foreign_realtime_data'] = $this->getRealtimeData(sprintf($this->realUrl, '新冠肺炎国外疫情', time()*1000));
+
+                    //mapSrc  https://mms-res.cdn.bcebos.com/mms-res/voicefe/captain/images/179c88c21e03aa351b8be66eed098e5f.png?size=1050*803
+                    $redis->hSet($this->key, 'mapSrc', serialize($tmpArr['component'][0]['mapSrc']));
                     
                     $result = $this->redisGetAll($redis);
-
-                    //全民热搜
-                    // $result['hotwords'] = isset($tmpArr['component'][0]['hotwords']) ? $tmpArr['component'][0]['hotwords'] : '';
-
-                    //knowledges
-                    // print_r($tmpArr['component']);
-
-                    // [query] => 新型肺炎自查手册
-                    // [type] => 0
-                    // [degree] => 3420900
-                    // [url] => https://m.baidu.com/s?word=新型肺炎自查手册&sa=osari_fangyi
-
-                    //gossips
-                    // [query] => 超市买的东西必须消毒
-                    // [type] => 7
-                    // [url] => https://m.baidu.com/s?word=超市买的东西必须消毒&sa=osari_yaoyan
-                    // [degree] => 7224
-
-                    //mapSrc
-                    //https://mms-res.cdn.bcebos.com/mms-res/voicefe/captain/images/179c88c21e03aa351b8be66eed098e5f.png?size=1050*803     
-
-                    //cooperation           
-                    //pcCooperation
-                    //kingData                
                 } else {
                     var_dump('get json data error');
                 }
@@ -147,10 +124,14 @@ class Baidu
         //缓存的数据
         if ($redis->exists($this->key)) {
             $rows = $redis->hGetAll($this->key);
-            foreach ($rows as $key => $val) {
-                if ($val) {
-                    $rows[$key] = unserialize($val);
+            if ($rows) {
+                foreach ($rows as $key => $val) {
+                    if ($val) {
+                        $rows[$key] = unserialize($val);
+                    }
                 }
+            } else {
+                $this->getData();
             }
         }
 

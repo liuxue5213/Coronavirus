@@ -2,6 +2,9 @@
 
 ### page component version bundle
 
+### logo
+https://mms-res.cdn.bcebos.com/voicefe/captain/images/be3a8f01a533fc60dcb457d60fda3fec479281d3?160*50 logo white
+https://mms-res.cdn.bcebos.com/voicefe/captain/images/1b9ddd53f65d1b3a4faeca959e15d425c8d85d2f?117*38  red-blue logo
 
 ### component[0]['caseList']
 ```

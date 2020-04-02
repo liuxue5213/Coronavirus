@@ -23,7 +23,18 @@ $frtData = isset($data['foreign_realtime_data']) ? $data['foreign_realtime_data'
             .t1{padding-left: 65px;}
             .bgc{background-color: #445175;}
             .center{text-align: center;}
-            .tab-span{width: 135px;padding-left: 5px;}
+            .tab-span{width: 185px;}
+            .tab-span-forg{width: 370px;}
+            .summary-data{display: flex;width: 95%;text-align: center;font-size: 22px;padding:20px 5px;}
+            .confirm{color: #ff6a57}
+            .confirmed{color: #e83132}
+            .cured{color: #10aeb5}
+            .died{color: #4d5054}
+            .asymptomatic{color: #e86d48}
+            .unconfirmed{color: #ec9217}
+            .icu{color: #545499}
+            .overseasInput{color: #476da0}
+
         </style>
     </head>
     <body>
@@ -85,38 +96,58 @@ $frtData = isset($data['foreign_realtime_data']) ? $data['foreign_realtime_data'
                 <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">国内疫情</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">国外疫情</a>
+                <a class="nav-link" id="foreign-tab" data-toggle="tab" href="#foreign" role="tab" aria-controls="foreign" aria-selected="false">国外疫情</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">实时播报</a>
+                <a class="nav-link" id="big-tab" data-toggle="tab" href="#big" role="tab" aria-controls="big" aria-selected="false">数据统计</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" id="contact2-tab" data-toggle="tab" href="#contact2" role="tab" aria-controls="contact2" aria-selected="false">全民热搜</a>
-            </li>
+            <!-- <li class="nav-item">
+                <a class="nav-link" id="big2-tab" data-toggle="tab" href="#big2" role="tab" aria-controls="big2" aria-selected="false">全民热搜</a>
+            </li> -->
         </ul>
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                 <!-- 国内疫情情况 -->
-                <div style="display: flex;">
-                    <span class="tab-span">现有确诊：
-                        <span style="color: #ff6a57"><?php echo $data['summaryDataIn']['curConfirm'];?></span>
-                        昨日：<span style="color: #ff6a57"><?php echo $data['summaryDataIn']['curConfirmRelative'];?></span>
+                <div class="summary-data">
+                    <span class="tab-span">现有确诊
+                        <span class="confirm"><?php echo $data['summaryDataIn']['curConfirm'];?></span><br>
+                        昨日<span class="confirm"><?php echo $data['summaryDataIn']['curConfirmRelative'] ? '+'.$data['summaryDataIn']['curConfirmRelative']:$data['summaryDataIn']['curConfirmRelative'];?></span>
                     </span>
 
-                    <span class="tab-span">无症状：
-                        <span style="color: #e86d48"><?php echo $data['summaryDataIn']['asymptomatic'];?></span>
-                        昨日：<span style="color: #e86d48"><?php echo $data['summaryDataIn']['asymptomaticRelative'];?></span>
+                    <span class="tab-span">无症状
+                        <span class="asymptomatic"><?php echo $data['summaryDataIn']['asymptomatic'];?></span><br>
+                        昨日<span class="asymptomatic"><?php echo $data['summaryDataIn']['asymptomaticRelative'] ? '+'.$data['summaryDataIn']['asymptomaticRelative']:$data['summaryDataIn']['asymptomaticRelative'];?></span>
                     </span>
 
+                    <span class="tab-span">现有疑似
+                        <span class="unconfirmed"><?php echo $data['summaryDataIn']['unconfirmed'];?></span><br>
+                        昨日<span class="unconfirmed"><?php echo $data['summaryDataIn']['unconfirmedRelative'] > 0 ? '+'.$data['summaryDataIn']['unconfirmedRelative']:$data['summaryDataIn']['unconfirmedRelative'];?></span>
+                    </span>
 
-<!--                    <span class="tab-span">无症状：--><?php //echo $data['summaryDataIn']['asymptomatic'];?><!--</span>-->
-<!--                    <span class="tab-span">现有疑似：--><?php //echo $data['summaryDataIn']['unconfirmed'];?><!--</span>-->
-<!--                    <span class="tab-span">现有重症：--><?php //echo $data['summaryDataIn']['icu'];?><!--</span>-->
-<!---->
-<!--                    <span class="tab-span">累计确诊：--><?php //echo $data['summaryDataIn']['confirmed'];?><!--</span>-->
-<!--                    <span class="tab-span">境外输入：--><?php //echo $data['summaryDataIn']['overseasInput'];?><!--</span>-->
-<!--                    <span class="tab-span">累计治愈：--><?php //echo $data['summaryDataIn']['cured'];?><!--</span>-->
-<!--                    <span class="tab-span">累计死亡：--><?php //echo $data['summaryDataIn']['died'];?><!--</span>-->
+                    <span class="tab-span">现有重症
+                        <span class="icu"><?php echo $data['summaryDataIn']['icu'];?></span><br>
+                        昨日<span class="icu"><?php echo $data['summaryDataIn']['icuRelative'] > 0 ? '+'.$data['summaryDataIn']['icuRelative']:$data['summaryDataIn']['icuRelative'];?></span>
+                    </span>
+
+                    <span class="tab-span">累计确诊
+                        <span class="confirmed"><?php echo $data['summaryDataIn']['confirmed'];?></span><br>
+                        昨日<span class="confirmed"><?php echo $data['summaryDataIn']['confirmedRelative'] > 0 ? '+'.$data['summaryDataIn']['confirmedRelative']:$data['summaryDataIn']['confirmedRelative'];?></span>
+                    </span>
+
+                    <span class="tab-span">境外输入
+                        <span class="overseasInput"><?php echo $data['summaryDataIn']['overseasInput'];?></span><br>
+                        昨日<span class="overseasInput"><?php echo $data['summaryDataIn']['overseasInputRelative'] > 0 ? '+'.$data['summaryDataIn']['overseasInputRelative']:$data['summaryDataIn']['overseasInputRelative'];?></span>
+                    </span>
+
+                    <span class="tab-span">累计治愈
+                        <span class="cured"><?php echo $data['summaryDataIn']['cured'];?></span><br>
+                        昨日<span class="cured"><?php echo $data['summaryDataIn']['curedRelative'] > 0 ? '+'.$data['summaryDataIn']['curedRelative']:$data['summaryDataIn']['curedRelative'];?></span>
+                    </span>
+
+                    <span class="tab-span">累计死亡
+                        <span class="died"><?php echo $data['summaryDataIn']['died'];?></span><br>
+                        昨日<span class="died"><?php echo $data['summaryDataIn']['diedRelative'] > 0 ? '+'.$data['summaryDataIn']['diedRelative']:$data['summaryDataIn']['diedRelative'];?></span>
+                    </span>
                 </div>
 
                 <!-- 国内资讯 -->
@@ -148,13 +179,28 @@ $frtData = isset($data['foreign_realtime_data']) ? $data['foreign_realtime_data'
                     <?php } ?>
                 </div>
             </div>
-            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+            <div class="tab-pane fade" id="foreign" role="tabpanel" aria-labelledby="foreign-tab">
                 <!-- 国外疫情情况 -->
-                <div>
-                    <p>现有确诊</p>
-                    <p>累计确诊</p>
-                    <p>累计治愈</p>
-                    <p>累计死亡</p>
+                <div class="summary-data">
+                    <span class="tab-span-forg">现有确诊
+                        <span class="confirm"><?php echo $data['summaryDataOut']['curConfirm'];?></span><br>
+                        昨日<span class="confirm"><?php echo $data['summaryDataOut']['curConfirmRelative'] > 0 ? '+'.$data['summaryDataOut']['curConfirmRelative']:$data['summaryDataOut']['curConfirmRelative'];?></span>
+                    </span>
+
+                    <span class="tab-span-forg">累计确诊
+                        <span class="confirmed"><?php echo $data['summaryDataOut']['confirmed'];?></span><br>
+                        昨日<span class="confirmed"><?php echo $data['summaryDataOut']['curedRelative'] > 0 ? '+'.$data['summaryDataOut']['confirmedRelative']:$data['summaryDataOut']['curedRelative'];?></span>
+                    </span>
+
+                    <span class="tab-span-forg">累计治愈
+                        <span class="cured"><?php echo $data['summaryDataOut']['cured'];?></span><br>
+                        昨日<span class="cured"><?php echo $data['summaryDataOut']['curedRelative'] > 0 ? '+'.$data['summaryDataOut']['curedRelative']:$data['summaryDataOut']['curedRelative'];?></span>
+                    </span>
+
+                    <span class="tab-span-forg">累计死亡
+                        <span class="died"><?php echo $data['summaryDataOut']['died'];?></span><br>
+                        昨日<span class="died"><?php echo $data['summaryDataOut']['diedRelative'] > 0 ? '+'.$data['summaryDataOut']['diedRelative']:$data['summaryDataOut']['diedRelative'];?></span>
+                    </span>
                 </div>
 
                 <!-- 国外疫情 -->
@@ -186,10 +232,11 @@ $frtData = isset($data['foreign_realtime_data']) ? $data['foreign_realtime_data'
 					<?php } ?>
                 </div>
             </div>
-            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-                3333
+            <div class="tab-pane fade" id="big" role="tabpanel" aria-labelledby="big-tab">
+                <!-- 数据分析 -->
+                完成中...
             </div>
-            <div class="tab-pane fade" id="contact2" role="tabpanel" aria-labelledby="contact2-tab">
+            <div class="tab-pane fade" id="big2" role="tabpanel" aria-labelledby="big2-tab">
                 4444
             </div>
         </div>
@@ -209,9 +256,9 @@ $frtData = isset($data['foreign_realtime_data']) ? $data['foreign_realtime_data'
                 $('#hideFrt').hide();
             }
         </script>
-        <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+        <script src="js/base/js/jquery.slim.min.js"></script>
+        <script src="js/base/js/popper.min.js"></script>
+        <script src="js/base/js/bootstrap.min.js"></script>
   </body>
 </html>
 
