@@ -34,7 +34,7 @@ $frtData = isset($data['foreign_realtime_data']) ? $data['foreign_realtime_data'
             .unconfirmed{color: #ec9217}
             .icu{color: #545499}
             .overseasInput{color: #476da0}
-
+            .other{font-size: 24px;padding-left: 20%;}
         </style>
     </head>
     <body>
@@ -73,7 +73,7 @@ $frtData = isset($data['foreign_realtime_data']) ? $data['foreign_realtime_data'
             <span style="margin-top: 5px;color:#F23F40">百度抗击肺炎专题</span>
         </h1>
         <!-- <h3>数据来自官方通报 全国与各省通报数据可能存在差异</h3> -->
-        <h3>数据更新时间：<?php echo $data['mapLastUpdatedTime'];?>
+        <h3>数据更新时间(北京时间)：<?php echo $data['mapLastUpdatedTime'];?>
             <?php
                 if ($data['mapLastUpdatedTime'] != $data['foreignLastUpdatedTime']) {
 				    echo sprintf('<h3>国际数据更新时间：%s</h3>', $data['foreignLastUpdatedTime']);
@@ -175,7 +175,7 @@ $frtData = isset($data['foreign_realtime_data']) ? $data['foreign_realtime_data'
                                     </p>
                                 </div>
                     <?php $rti++;} ?>
-                        <div id="hideRt"><a class="text-success" onclick="showRt()">查看更多</a></div>
+                        <div id="hideRt"><a class="text-success other" onclick="showRt()">点击查看更多</a></div>
                     <?php } ?>
                 </div>
             </div>
@@ -228,7 +228,7 @@ $frtData = isset($data['foreign_realtime_data']) ? $data['foreign_realtime_data'
                                 </p>
                             </div>
 							<?php $frti++;} ?>
-                        <div id="hideFrt"><a class="text-success" onclick="showFrt()">查看更多</a></div>
+                        <div id="hideFrt"><a class="text-success other" onclick="showFrt()">点击查看更多</a></div>
 					<?php } ?>
                 </div>
             </div>

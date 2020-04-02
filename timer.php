@@ -4,6 +4,7 @@ require_once 'data/corona.php';
 require_once 'data/other.php';
 require_once 'baidu/get.php';
 
+//liuxue5213.github.io
 $corona = new Corona();
 $corona->index();
 var_dump('data refresh success');
