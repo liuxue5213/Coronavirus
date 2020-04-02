@@ -3,11 +3,11 @@
 require_once 'baidu/get.php';
 $nav = isset($_REQUEST['nav']) ? $_REQUEST['nav']: '';
 $baidu = new Baidu();
-$data = $baidu->index();
+$data = $baidu->getData();
+$nowDay = date('Y-m-d');
 $trumpet = isset($data['trumpet']) ? $data['trumpet'] : array();
-// print_r($data);
-// die;
-
+$rtData = isset($data['realtime_data']) ? $data['realtime_data'] : array();
+$frtData = isset($data['foreign_realtime_data']) ? $data['foreign_realtime_data'] : array();
 
 ?>
 <!doctype html>
@@ -23,6 +23,7 @@ $trumpet = isset($data['trumpet']) ? $data['trumpet'] : array();
             .t1{padding-left: 65px;}
             .bgc{background-color: #445175;}
             .center{text-align: center;}
+            .tab-span{width: 135px;padding-left: 5px;}
         </style>
     </head>
     <body>
@@ -60,23 +61,157 @@ $trumpet = isset($data['trumpet']) ? $data['trumpet'] : array();
             <img src="https://mms-res.cdn.bcebos.com/voicefe/captain/images/1b9ddd53f65d1b3a4faeca959e15d425c8d85d2f?120*40">
             <span style="margin-top: 5px;color:#F23F40">百度抗击肺炎专题</span>
         </h1>
-
         <!-- <h3>数据来自官方通报 全国与各省通报数据可能存在差异</h3> -->
-        <h3>数据更新至：<?php echo $data['mapLastUpdatedTime'];?></h3>
+        <h3>数据更新时间：<?php echo $data['mapLastUpdatedTime'];?>
+            <?php
+                if ($data['mapLastUpdatedTime'] != $data['foreignLastUpdatedTime']) {
+				    echo sprintf('<h3>国际数据更新时间：%s</h3>', $data['foreignLastUpdatedTime']);
+                }
+            ?>
+        </h3>
 
         <!-- 公告消息 -->
-        <div>
-            <h2 class="center">公告消息</h2>
-            <?php if ($trumpet) { 
-                foreach ($trumpet as $val) { ?>
+        <h2 class="center">公告消息</h2>
+        <?php if ($trumpet) {
+            foreach ($trumpet as $val) { ?>
                 <h4><?php echo $val['title'];?></h4>
                 <p>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $val['content'];?>
                 </p>
-            <?php } } ?>
+        <?php } } ?>
+
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">国内疫情</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">国外疫情</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">实时播报</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="contact2-tab" data-toggle="tab" href="#contact2" role="tab" aria-controls="contact2" aria-selected="false">全民热搜</a>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <!-- 国内疫情情况 -->
+                <div style="display: flex;">
+                    <span class="tab-span">现有确诊：
+                        <span style="color: #ff6a57"><?php echo $data['summaryDataIn']['curConfirm'];?></span>
+                        昨日：<span style="color: #ff6a57"><?php echo $data['summaryDataIn']['curConfirmRelative'];?></span>
+                    </span>
+
+                    <span class="tab-span">无症状：
+                        <span style="color: #e86d48"><?php echo $data['summaryDataIn']['asymptomatic'];?></span>
+                        昨日：<span style="color: #e86d48"><?php echo $data['summaryDataIn']['asymptomaticRelative'];?></span>
+                    </span>
+
+
+<!--                    <span class="tab-span">无症状：--><?php //echo $data['summaryDataIn']['asymptomatic'];?><!--</span>-->
+<!--                    <span class="tab-span">现有疑似：--><?php //echo $data['summaryDataIn']['unconfirmed'];?><!--</span>-->
+<!--                    <span class="tab-span">现有重症：--><?php //echo $data['summaryDataIn']['icu'];?><!--</span>-->
+<!---->
+<!--                    <span class="tab-span">累计确诊：--><?php //echo $data['summaryDataIn']['confirmed'];?><!--</span>-->
+<!--                    <span class="tab-span">境外输入：--><?php //echo $data['summaryDataIn']['overseasInput'];?><!--</span>-->
+<!--                    <span class="tab-span">累计治愈：--><?php //echo $data['summaryDataIn']['cured'];?><!--</span>-->
+<!--                    <span class="tab-span">累计死亡：--><?php //echo $data['summaryDataIn']['died'];?><!--</span>-->
+                </div>
+
+                <!-- 国内资讯 -->
+                <div>
+                    <h2 class="center">国内资讯</h2>
+                    <?php if ($rtData) {
+                        $rti = 1;
+                        foreach ($rtData as $val) { ?>
+                                <div class="hideRt" style="display: <?php echo $rti > 10 ? 'none' : '';?>" >
+                                    <h3>
+                                        <a target="_blank" href="<?php echo $val['eventUrl'];?>" style="text-decoration:none;color: #4d5054;">
+                                            <?php echo $rti.'、'.$val['eventDescription'];?>
+                                        </a>
+                                    </h3>
+                                    <p>
+                                    <span>
+                                        <?php
+                                        echo date('Y-m-d H:i', $val['eventTime']);
+                                        if ($nowDay == date('Y-m-d', $val['eventTime'])) {
+                                            echo '(<span style="color:#F23F40;">新</span>)';
+                                        }
+                                        ?>
+                                    </span>
+                                        <span>信息来源：<a target="_blank" href="<?php echo $val['homepageUrl'];?>" style="text-decoration:none;"><?php echo $val['siteName'];?></a></span>
+                                    </p>
+                                </div>
+                    <?php $rti++;} ?>
+                        <div id="hideRt"><a class="text-success" onclick="showRt()">查看更多</a></div>
+                    <?php } ?>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                <!-- 国外疫情情况 -->
+                <div>
+                    <p>现有确诊</p>
+                    <p>累计确诊</p>
+                    <p>累计治愈</p>
+                    <p>累计死亡</p>
+                </div>
+
+                <!-- 国外疫情 -->
+                <div>
+                    <h2 class="center">国外疫情</h2>
+					<?php if ($frtData) {
+						$frti = 1;
+						foreach ($frtData as $val) { ?>
+                            <div class="hideFrt" style="display: <?php echo $frti > 15 ? 'none' : '';?>" >
+                                <h3>
+                                    <a target="_blank" href="<?php echo $val['eventUrl'];?>" style="text-decoration:none;color: #4d5054;">
+										<?php echo $frti.'、'.$val['eventDescription'];?>
+                                    </a>
+                                </h3>
+                                <p>
+                                    <span>
+                                        <?php
+										echo date('Y-m-d H:i', $val['eventTime']);
+										if ($nowDay == date('Y-m-d', $val['eventTime'])) {
+											echo '(<span style="color:#F23F40;">新</span>)';
+										}
+										?>
+                                    </span>
+                                    <span>信息来源：<a target="_blank" href="<?php echo $val['homepageUrl'];?>" style="text-decoration:none;"><?php echo $val['siteName'];?></a></span>
+                                </p>
+                            </div>
+							<?php $frti++;} ?>
+                        <div id="hideFrt"><a class="text-success" onclick="showFrt()">查看更多</a></div>
+					<?php } ?>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                3333
+            </div>
+            <div class="tab-pane fade" id="contact2" role="tabpanel" aria-labelledby="contact2-tab">
+                4444
+            </div>
         </div>
 
-        
+        <script>
+            $(function() {
+
+
+            });
+
+            function showRt() {
+                $('.hideRt').show();
+                $('#hideRt').hide();
+            }
+            function showFrt() {
+                $('.hideFrt').show();
+                $('#hideFrt').hide();
+            }
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
   </body>
 </html>
 

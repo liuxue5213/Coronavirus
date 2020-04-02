@@ -3,7 +3,7 @@
  * @Author: anchen
  * @Date:   2020-03-27 17:06:30
  * @Last Modified by:   anchen
- * @Last Modified time: 2020-04-01 09:11:11
+ * @Last Modified time: 2020-04-02 18:23:29
  */
 require_once './common/phpQuery.php';
 require_once './common/QueryList.php';
@@ -15,148 +15,146 @@ use QL\QueryList;
 //https://mms-res.cdn.bcebos.com/voicefe/captain/images/1b9ddd53f65d1b3a4faeca959e15d425c8d85d2f?117*38  red-blue logo
 class Baidu
 {
-    public function index($return = false)
+    protected $key = 'baidu';
+    private $url = 'https://voice.baidu.com/act/newpneumonia/newpneumonia/?from=osari_pc_1';
+    private $realUrl = 'https://opendata.baidu.com/data/inner?tn=reserved_all_res_tn&dspName=iphone&from_sf=1&dsp=iphone&resource_id=28565&alr=1&query=%s&cb=jsonp_%s_39356';
+
+    public function getData($column = '')
     {
         $result = array();
-        $url = 'https://voice.baidu.com/act/newpneumonia/newpneumonia/?from=osari_pc_1';
-        $curl = new Curl();
-        $data = $curl->curl_post($url);
+        $config = array(
+            'host' => '127.0.0.1',
+            'port' => '6379'
+        );
+        $redis = new Predis($config);
+        if ($redis->exists($this->key)) {
+            //指定column查询
+            if ($column) {
+                $result = $redis->hGet($this->key, $column);
+            } else {
+                $result = $this->redisGetAll($redis);
+            }
+        } else {
+            $curl = new Curl();
+            $data = $curl->curlPost($this->url);
+            if ($data) {
+                //正则提取json数据
+                preg_match_all('/id=\"captain-config\">(.*?)<\/script>+/', $data, $tmpArr);
+                $tmpArr = isset($tmpArr[1][0]) ? $tmpArr[1][0] : array();
+                if ($tmpArr) {
+                    //page component version bundle
+                    $tmpArr = json_decode($tmpArr, true);
 
-        //正则提取json数据
-        // $data = 1;
-        if ($data) {
-            preg_match_all('/id=\"captain-config\">(.*?)<\/script>+/', $data, $tmpArr);
-            $tmpArr = isset($tmpArr[1][0]) ? $tmpArr[1][0] : array();
-            // $config = array(
-            //     'host' => '127.0.0.1',
-            //     'port' => '6379'
-            // );
-            // $redis = new Predis($config);
-            // $redis->set('baidu', $tmpArr[1][0]);
-            // $tmpArr = $redis->get('baidu');
-            // die;
-            if ($tmpArr) {
-                //page component version bundle
-                $tmpArr = json_decode($tmpArr, true);
-                //通知公告
-                $result['trumpet'] = isset($tmpArr['component'][0]['trumpet']) ? $tmpArr['component'][0]['trumpet'] : '';
-                //最近更新时间
-                $result['mapLastUpdatedTime'] = isset($tmpArr['component'][0]['mapLastUpdatedTime']) ? $tmpArr['component'][0]['mapLastUpdatedTime'] : '';
-                
-                // print_r(array_keys($tmpArr['component'][0]));
-                // print_r($tmpArr['component'][0]);
-                // die;
-                // print_r($tmpArr['component'][0]['mapLastUpdatedTime']);
+                    $redis->del($this->key);
 
-                //hotwords
-// [type] => 0
-// [query] => 顺丰回应截获口罩
-// [url] => https://m.baidu.com/s?word=顺丰回应截获口罩&sa=osari_hotword
-// [degree] => 57100
+                    //通知公告
+                    if ($tmpArr['component'][0]['trumpet']) {
+                        $redis->hSet($this->key, 'trumpet', serialize($tmpArr['component'][0]['trumpet']));
+                    }
+                    // $result['trumpet'] = isset($tmpArr['component'][0]['trumpet']) ? $tmpArr['component'][0]['trumpet'] : '';
+                    
+                    //最近更新时间
+                    if ($tmpArr['component'][0]['mapLastUpdatedTime']) {
+                        $redis->hSet($this->key, 'mapLastUpdatedTime', serialize($tmpArr['component'][0]['mapLastUpdatedTime']));
+                    }
+                    if ($tmpArr['component'][0]['foreignLastUpdatedTime']) {
+                        $redis->hSet($this->key, 'foreignLastUpdatedTime', serialize($tmpArr['component'][0]['foreignLastUpdatedTime']));
+                    }
+                    // $result['mapLastUpdatedTime'] = isset($tmpArr['component'][0]['mapLastUpdatedTime']) ? $tmpArr['component'][0]['mapLastUpdatedTime'] : '';
+                    // $result['foreignLastUpdatedTime'] = isset($tmpArr['component'][0]['foreignLastUpdatedTime']) ? $tmpArr['component'][0]['foreignLastUpdatedTime'] : '';
 
-                // summaryDataIn
-// [confirmed] => 82691
-// [died] => 3321
-// [cured] => 76440
-// [asymptomatic] => 1367
-// [asymptomaticRelative] => 130
-// [unconfirmed] => 172
-// [relativeTime] => 1585584000
-// [confirmedRelative] => 86
-// [unconfirmedRelative] => 26
-// [curedRelative] => 190
-// [diedRelative] => 7
-// [icu] => 466
-// [icuRelative] => -62
-// [overseasInput] => 806
-// [unOverseasInputCumulative] => 81825
-// [overseasInputRelative] => 35
-// [unOverseasInputNewAdd] => 51
-// [curConfirm] => 2930
-// [curConfirmRelative] => -111
-// [icuDisable] => 1
+                    //国内情况
+                    if ($tmpArr['summaryDataIn'][0]['summaryDataIn']) {
+                        $redis->hSet($this->key, 'summaryDataIn', serialize($tmpArr['component'][0]['summaryDataIn']));
+                    }
+                    // $result['summaryDataIn'] = isset($tmpArr['component'][0]['summaryDataIn']) ? $tmpArr['component'][0]['summaryDataIn'] : '';
 
-                // summaryDataOut
-// [confirmed] => 803333
-// [died] => 41014
-// [curConfirm] => 652370
-// [cured] => 109949
-// [confirmedRelative] => 57568
-// [curedRelative] => 10019
-// [diedRelative] => 3295
-// [curConfirmRelative] => 44254
-// [relativeTime] => 1585584000
+                    //国外情况
+                    if ($tmpArr['summaryDataOut'][0]['summaryDataOut']) {
+                        $redis->hSet($this->key, 'summaryDataOut', serialize($tmpArr['component'][0]['summaryDataOut']));
+                    }
+                    // $result['summaryDataOut'] = isset($tmpArr['component'][0]['summaryDataOut']) ? $tmpArr['component'][0]['summaryDataOut'] : '';
 
+                    //实时新闻
+                    $redis->hSet($this->key, 'realtime_data', serialize($this->getRealtimeData(sprintf($this->realUrl, '肺炎', time()*1000))));
+                    // $result['realtime_data'] = $this->getRealtimeData(sprintf($this->realUrl, '肺炎', time()*1000));
+                    $redis->hSet($this->key, 'foreign_realtime_data', serialize($this->getRealtimeData(sprintf($this->realUrl, '新冠肺炎国外疫情', time()*1000))));
+                    // $result['foreign_realtime_data'] = $this->getRealtimeData(sprintf($this->realUrl, '新冠肺炎国外疫情', time()*1000));
+                    
+                    $result = $this->redisGetAll($redis);
 
-//knowledges
-// [query] => 新型肺炎自查手册
-// [type] => 0
-// [degree] => 3420900
-// [url] => https://m.baidu.com/s?word=新型肺炎自查手册&sa=osari_fangyi
+                    //全民热搜
+                    // $result['hotwords'] = isset($tmpArr['component'][0]['hotwords']) ? $tmpArr['component'][0]['hotwords'] : '';
 
-//gossips
-// [query] => 超市买的东西必须消毒
-// [type] => 7
-// [url] => https://m.baidu.com/s?word=超市买的东西必须消毒&sa=osari_yaoyan
-// [degree] => 7224
+                    //knowledges
+                    // print_r($tmpArr['component']);
 
-//foreignLastUpdatedTime
-//mapSrc
-//https://mms-res.cdn.bcebos.com/mms-res/voicefe/captain/images/179c88c21e03aa351b8be66eed098e5f.png?size=1050*803     
+                    // [query] => 新型肺炎自查手册
+                    // [type] => 0
+                    // [degree] => 3420900
+                    // [url] => https://m.baidu.com/s?word=新型肺炎自查手册&sa=osari_fangyi
 
-//cooperation           
-//pcCooperation
-//kingData                
+                    //gossips
+                    // [query] => 超市买的东西必须消毒
+                    // [type] => 7
+                    // [url] => https://m.baidu.com/s?word=超市买的东西必须消毒&sa=osari_yaoyan
+                    // [degree] => 7224
+
+                    //mapSrc
+                    //https://mms-res.cdn.bcebos.com/mms-res/voicefe/captain/images/179c88c21e03aa351b8be66eed098e5f.png?size=1050*803     
+
+                    //cooperation           
+                    //pcCooperation
+                    //kingData                
+                } else {
+                    var_dump('get json data error');
+                }
+            } else {
+                var_dump('get baidu data error');
             }
         }
+
         return $result;
-            // $config = array(
-            //     'host' => '127.0.0.1',
-            //     'port' => '6379'
-            // );
-            // $redis = new Predis($config);
-            // $this->redisDel($redis, $tmpKey);
-            // $redis->hSet($tmpKey, $data[$i]['country'], serialize($data[$i]));
-            // return $this->redisGetAll($redis, $key);
     }
 
-    public static function checkNum($num, $key)
+    public function index()
     {
-        if (!in_array($key, array('country', 'country_url', 'ost_case'))) {
-            $num = $num ? str_replace(',', '', $num): '';
+        return $this->getData();
+    }
+
+    //实时国内外新冠疫情新闻
+    public function getRealtimeData($realUrl)
+    {
+        $result = array();
+        if ($realUrl) {
+            $curl = new Curl();
+            $data = $curl->curlGet($realUrl, false);
+            //正则提取json数据
+            preg_match_all('/(?:\{)(.*)(?:\})/i', $data, $tmpArr);
+            $data = isset($tmpArr[0][0]) ? $tmpArr[0][0] : array();
+            if ($data) {
+                $data = json_decode($data, true);
+                $result = isset($data['Result'][0]['DisplayData']['result']['items']) ? $data['Result'][0]['DisplayData']['result']['items'] : array();
+            }
         }
         
-        return $num;
+        return $result;
     }
 
-    public function redisGetAll($redis, $key)
+    public function redisGetAll($redis)
     {
-        $i = 1;
-        $res = $tmpArrs = array();
-        while ($i) {
-            $tmpKey = $key.$i;
-            if ($redis->exists($tmpKey)) {
-                //缓存的数据
-                $rows = $redis->hGetAll($tmpKey);
-                //城市
-                $keys = $redis->hKeys($tmpKey);
-                foreach ($keys as $country) {
-                    if (isset($rows[$country]) && !in_array($country, $tmpArrs)) {
-                        array_push($res, unserialize($rows[$country]));
-                        array_push($tmpArrs, $country);
-                    }
+        $rows = array();
+        //缓存的数据
+        if ($redis->exists($this->key)) {
+            $rows = $redis->hGetAll($this->key);
+            foreach ($rows as $key => $val) {
+                if ($val) {
+                    $rows[$key] = unserialize($val);
                 }
-                $i++;
-            } else {
-                $i = '';
             }
         }
-        if ($res) {
-            $tmpCases = array_column($res, 'total_cases');
-            array_multisort($tmpCases, SORT_DESC, $res);
-        }
 
-        return $res;
+        return $rows;
     }
 
     //全国迁徙城市热门
