@@ -3,107 +3,149 @@
  * @Author: anchen
  * @Date:   2020-03-27 17:06:30
  * @Last Modified by:   anchen
- * @Last Modified time: 2020-04-01 09:11:11
+ * @Last Modified time: 2020-04-02 18:23:29
  */
-require_once '../common/phpQuery.php';
-require_once '../common/QueryList.php';
-require_once '../common/redis.php';
+require_once './common/phpQuery.php';
+require_once './common/QueryList.php';
+require_once './common/redis.php';
+require_once './common/curl.php';
 use QL\QueryList;
 
 class Baidu
 {
-    public function index($return = false)
+    protected $key = 'baidu';
+    private $url = 'https://voice.baidu.com/act/newpneumonia/newpneumonia/?from=osari_pc_1';
+    private $realUrl = 'https://opendata.baidu.com/data/inner?tn=reserved_all_res_tn&dspName=iphone&from_sf=1&dsp=iphone&resource_id=28565&alr=1&query=%s&cb=jsonp_%s_39356';
+
+    public function getData($column = '')
     {
-        $url = 'https://www.worldometers.info/coronavirus';
-        $rules = array(
-            'country' => ['td:eq(0)', 'text'],
-            'country_url' => ['td:eq(0)>a', 'href', 'text'],
-            'total_cases' => ['td:eq(1)', 'text'],
-            'new_cases' => ['td:eq(2)', 'text'],
-            'total_deaths' => ['td:eq(3)', 'text'],
-            'new_deaths' => ['td:eq(4)', 'text'],
-            'total_recovered' => ['td:eq(5)', 'text'],
-            'active_cases' => ['td:eq(6)', 'text'],
-            'serious_critical' => ['td:eq(7)', 'text'],
-            'tot_cases_1m' => ['td:eq(8)', 'text'],
-            'tot_deaths_1m' => ['td:eq(9)', 'text'],
-            'ost_case' => ['td:eq(10)', 'text'],
-            'callback' => array('Corona', 'checkNum')
+        $result = array();
+        $config = array(
+            'host' => '127.0.0.1',
+            'port' => '6379'
         );
-        $rang = '#nav-tabContent tbody tr';
-        $hj = QueryList::Query($url, $rules, $rang);
-        $data = $hj->data;
-
-        $count = count($data);
-        if ($count) {
-            $config = array(
-                'host' => '127.0.0.1',
-                'port' => '6379'
-            );
-            $redis = new Predis($config);
-            $key = 'corona';
-            $j = 0;
-            for ($i = 0; $i <= $count; $i++) {
-                if ($i % 100 == 0) {
-                    $j++;
-                    $tmpKey = $key.$j;
-                    $this->redisDel($redis, $tmpKey);
-                }
-                if (isset($data[$i]['country']) && $data[$i]['country'] != 'Total:') {
-                	if (isset($data[$i]['country_url']) && $data[$i]['country_url']) {
-                		$tmpK = explode('/', $data[$i]['country_url']);
-						$data[$i]['name'] = isset($tmpK[1]) ? $tmpK[1] : '';
-					}
-                    $redis->hSet($tmpKey, $data[$i]['country'], serialize($data[$i]));
-                }
-            }
-
-            if ($return) {
-                return $this->redisGetAll($redis, $key);
+        $redis = new Predis($config);
+        if ($redis->exists($this->key)) {
+            //指定column查询
+            if ($column) {
+                $result = $redis->hGet($this->key, $column);
             } else {
-                var_dump('refresh data success:'.date('Y-m-d H:i:s'));
+                $result = $this->redisGetAll($redis);
+            }
+        } else {
+            $curl = new Curl();
+            $data = $curl->curlPost($this->url);
+            if ($data) {
+                //正则提取json数据
+                preg_match_all('/id=\"captain-config\">(.*?)<\/script>+/', $data, $tmpArr);
+                $tmpArr = isset($tmpArr[1][0]) ? $tmpArr[1][0] : array();
+                if ($tmpArr) {
+                    //page component version bundle
+                    $tmpArr = json_decode($tmpArr, true);
+
+                    $redis->del($this->key);
+
+                    //通知公告
+                    if ($tmpArr['component'][0]['trumpet']) {
+                        $redis->hSet($this->key, 'trumpet', serialize($tmpArr['component'][0]['trumpet']));
+                    }
+                    // $result['trumpet'] = isset($tmpArr['component'][0]['trumpet']) ? $tmpArr['component'][0]['trumpet'] : '';
+                    
+                    //最近更新时间
+                    if ($tmpArr['component'][0]['mapLastUpdatedTime']) {
+                        $redis->hSet($this->key, 'mapLastUpdatedTime', serialize($tmpArr['component'][0]['mapLastUpdatedTime']));
+                    }
+                    if ($tmpArr['component'][0]['foreignLastUpdatedTime']) {
+                        $redis->hSet($this->key, 'foreignLastUpdatedTime', serialize($tmpArr['component'][0]['foreignLastUpdatedTime']));
+                    }
+                    // $result['mapLastUpdatedTime'] = isset($tmpArr['component'][0]['mapLastUpdatedTime']) ? $tmpArr['component'][0]['mapLastUpdatedTime'] : '';
+                    // $result['foreignLastUpdatedTime'] = isset($tmpArr['component'][0]['foreignLastUpdatedTime']) ? $tmpArr['component'][0]['foreignLastUpdatedTime'] : '';
+
+                    //国内情况
+                    if ($tmpArr['component'][0]['summaryDataIn']) {
+                        $redis->hSet($this->key, 'summaryDataIn', serialize($tmpArr['component'][0]['summaryDataIn']));
+                    }
+                    // $result['summaryDataIn'] = isset($tmpArr['component'][0]['summaryDataIn']) ? $tmpArr['component'][0]['summaryDataIn'] : '';
+
+                    //国外情况
+                    if ($tmpArr['component'][0]['summaryDataOut']) {
+                        $redis->hSet($this->key, 'summaryDataOut', serialize($tmpArr['component'][0]['summaryDataOut']));
+                    }
+                    // $result['summaryDataOut'] = isset($tmpArr['component'][0]['summaryDataOut']) ? $tmpArr['component'][0]['summaryDataOut'] : '';
+
+                    //实时新闻
+                    $redis->hSet($this->key, 'realtime_data', serialize($this->getRealtimeData(sprintf($this->realUrl, '肺炎', time()*1000))));
+                    // $result['realtime_data'] = $this->getRealtimeData(sprintf($this->realUrl, '肺炎', time()*1000));
+                    $redis->hSet($this->key, 'foreign_realtime_data', serialize($this->getRealtimeData(sprintf($this->realUrl, '新冠肺炎国外疫情', time()*1000))));
+                    // $result['foreign_realtime_data'] = $this->getRealtimeData(sprintf($this->realUrl, '新冠肺炎国外疫情', time()*1000));
+
+                    //mapSrc  https://mms-res.cdn.bcebos.com/mms-res/voicefe/captain/images/179c88c21e03aa351b8be66eed098e5f.png?size=1050*803
+                    $redis->hSet($this->key, 'mapSrc', serialize($tmpArr['component'][0]['mapSrc']));
+                    
+                    $result = $this->redisGetAll($redis);
+                } else {
+                    var_dump('get json data error');
+                }
+            } else {
+                var_dump('get baidu data error');
             }
         }
+
+        return $result;
     }
 
-    public static function checkNum($num, $key)
+    public function index()
     {
-        if (!in_array($key, array('country', 'country_url', 'ost_case'))) {
-            $num = $num ? str_replace(',', '', $num): '';
+        return $this->getData();
+    }
+
+    //实时国内外新冠疫情新闻
+    public function getRealtimeData($realUrl)
+    {
+        $result = array();
+        if ($realUrl) {
+            $curl = new Curl();
+            $data = $curl->curlGet($realUrl, false);
+            //正则提取json数据
+            preg_match_all('/(?:\{)(.*)(?:\})/i', $data, $tmpArr);
+            $data = isset($tmpArr[0][0]) ? $tmpArr[0][0] : array();
+            if ($data) {
+                $data = json_decode($data, true);
+                $result = isset($data['Result'][0]['DisplayData']['result']['items']) ? $data['Result'][0]['DisplayData']['result']['items'] : array();
+            }
         }
         
-        return $num;
+        return $result;
     }
 
-    public function redisGetAll($redis, $key)
+    public function redisGetAll($redis)
     {
-        $i = 1;
-        $res = $tmpArrs = array();
-        while ($i) {
-            $tmpKey = $key.$i;
-            if ($redis->exists($tmpKey)) {
-                //缓存的数据
-                $rows = $redis->hGetAll($tmpKey);
-                //城市
-                $keys = $redis->hKeys($tmpKey);
-                foreach ($keys as $country) {
-                    if (isset($rows[$country]) && !in_array($country, $tmpArrs)) {
-                        array_push($res, unserialize($rows[$country]));
-                        array_push($tmpArrs, $country);
+        $rows = array();
+        //缓存的数据
+        if ($redis->exists($this->key)) {
+            $rows = $redis->hGetAll($this->key);
+            if ($rows) {
+                foreach ($rows as $key => $val) {
+                    if ($val) {
+                        $rows[$key] = unserialize($val);
                     }
                 }
-                $i++;
             } else {
-                $i = '';
+                $this->getData();
             }
         }
-        if ($res) {
-            $tmpCases = array_column($res, 'total_cases');
-            array_multisort($tmpCases, SORT_DESC, $res);
-        }
 
-        return $res;
+        return $rows;
     }
+
+    //全国迁徙城市热门
+    function migration()
+    {
+        //https://qianxi.baidu.com/?from=shoubai#city=0
+        // 更新至2020.3.31
+       // https://huiyan.baidu.com/openapi/v1/migration/rank?type=move&ak=kgD2HiDnLdUhwzd3CLuG5AWNfX3fhLYe&adminType=country&name=%E5%85%A8%E5%9B%BD
+    }
+
 
     public function redisDel($redis, $key)
     {

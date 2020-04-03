@@ -5,7 +5,7 @@
  * @Last Modified by:   anchen
  * @Last Modified time: 2020-04-01 10:52:01
  */
-require_once './get.php';
+require_once 'data/get.php';
 
 $config = array(
     'host' => '127.0.0.1',
