@@ -19,4 +19,4 @@ var_dump('info refresh success');
 
 $baidu = new Baidu();
 $data = $baidu->index();
-var_dump('info refresh success');
+var_dump('baidu refresh success');
