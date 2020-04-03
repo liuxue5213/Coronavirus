@@ -3,7 +3,7 @@
  * @Author: anchen
  * @Date:   2020-03-27 17:06:30
  * @Last Modified by:   anchen
- * @Last Modified time: 2020-04-03 13:16:28
+ * @Last Modified time: 2020-04-03 14:25:50
  */
 require_once './common/phpQuery.php';
 require_once './common/QueryList.php';
@@ -19,7 +19,7 @@ class Baidu
     private $hotwordUrl = 'https://opendata.baidu.com/api.php?query=%s&resource_id=39258&tn=wisetpl&format=json&sa=osari_hotword_tab&cb=jsonp_%s_69146';
 
 
-    public function getData($column = '')
+    public function getData($refresh = false, $column = '')
     {
         $result = array();
         $config = array(
@@ -27,7 +27,9 @@ class Baidu
             'port' => '6379'
         );
         $redis = new Predis($config);
-
+        if ($refresh) {
+            $redis->del($this->key);
+        }
         if ($redis->exists($this->key)) {
             //指定column查询
             if ($column) {
@@ -92,9 +94,10 @@ class Baidu
         return $result;
     }
 
-    public function index()
+    //是否刷新redis
+    public function index($refresh = false)
     {
-        return $this->getData();
+        return $this->getData($refresh);
     }
 
     //实时国内外新冠疫情新闻
