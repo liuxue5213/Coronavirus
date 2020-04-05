@@ -1,6 +1,6 @@
 <?php
-require_once 'get.php';
-require_once 'other.php';
+require_once 'data/get.php';
+require_once 'data/other.php';
 
 //header("Access-Control-Allow-Origin：http://34.80.195.241");
 $tmpArr = $info = array();
