@@ -18,5 +18,5 @@ $data = $oc->index();
 var_dump('info refresh success');
 
 $baidu = new Baidu();
-$data = $baidu->index();
-var_dump('info refresh success');
+$data = $baidu->index(1);
+var_dump('baidu refresh success');

@@ -8,7 +8,9 @@ $nowDay = date('Y-m-d');
 $trumpet = isset($data['trumpet']) ? $data['trumpet'] : array();
 $rtData = isset($data['realtime_data']) ? $data['realtime_data'] : array();
 $frtData = isset($data['foreign_realtime_data']) ? $data['foreign_realtime_data'] : array();
-
+$hotwords = isset($data['hotwords']) ? $data['hotwords'] : array();
+//print_r($hotwords[0]['item']);
+//die;
 ?>
 <!doctype html>
 <html lang="en">
@@ -35,6 +37,8 @@ $frtData = isset($data['foreign_realtime_data']) ? $data['foreign_realtime_data'
             .icu{color: #545499}
             .overseasInput{color: #476da0}
             .other{font-size: 24px;padding-left: 20%;}
+            .degree{font-size: 16px;color: #999;}
+            .other-d{font-size: 24px;padding-left: 40%;}
         </style>
     </head>
     <body>
@@ -99,57 +103,59 @@ $frtData = isset($data['foreign_realtime_data']) ? $data['foreign_realtime_data'
                 <a class="nav-link" id="foreign-tab" data-toggle="tab" href="#foreign" role="tab" aria-controls="foreign" aria-selected="false">国外疫情</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" id="big2-tab" data-toggle="tab" href="#big2" role="tab" aria-controls="big2" aria-selected="false">全民热搜</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" id="big-tab" data-toggle="tab" href="#big" role="tab" aria-controls="big" aria-selected="false">数据统计</a>
             </li>
-            <!-- <li class="nav-item">
-                <a class="nav-link" id="big2-tab" data-toggle="tab" href="#big2" role="tab" aria-controls="big2" aria-selected="false">全民热搜</a>
-            </li> -->
         </ul>
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                 <!-- 国内疫情情况 -->
                 <div class="summary-data">
-                    <span class="tab-span">现有确诊
+                    <span class="tab-span-forg">现有确诊
                         <span class="confirm"><?php echo $data['summaryDataIn']['curConfirm'];?></span><br>
                         昨日<span class="confirm"><?php echo $data['summaryDataIn']['curConfirmRelative'] ? '+'.$data['summaryDataIn']['curConfirmRelative']:$data['summaryDataIn']['curConfirmRelative'];?></span>
                     </span>
 
-                    <span class="tab-span">无症状
+                    <span class="tab-span-forg">无症状
                         <span class="asymptomatic"><?php echo $data['summaryDataIn']['asymptomatic'];?></span><br>
                         昨日<span class="asymptomatic"><?php echo $data['summaryDataIn']['asymptomaticRelative'] ? '+'.$data['summaryDataIn']['asymptomaticRelative']:$data['summaryDataIn']['asymptomaticRelative'];?></span>
                     </span>
 
-                    <span class="tab-span">现有疑似
+                    <span class="tab-span-forg">现有疑似
                         <span class="unconfirmed"><?php echo $data['summaryDataIn']['unconfirmed'];?></span><br>
                         昨日<span class="unconfirmed"><?php echo $data['summaryDataIn']['unconfirmedRelative'] > 0 ? '+'.$data['summaryDataIn']['unconfirmedRelative']:$data['summaryDataIn']['unconfirmedRelative'];?></span>
                     </span>
 
-                    <span class="tab-span">现有重症
+                    <span class="tab-span-forg">现有重症
                         <span class="icu"><?php echo $data['summaryDataIn']['icu'];?></span><br>
                         昨日<span class="icu"><?php echo $data['summaryDataIn']['icuRelative'] > 0 ? '+'.$data['summaryDataIn']['icuRelative']:$data['summaryDataIn']['icuRelative'];?></span>
                     </span>
+                </div>
 
-                    <span class="tab-span">累计确诊
+                <div class="summary-data">
+                    <span class="tab-span-forg">累计确诊
                         <span class="confirmed"><?php echo $data['summaryDataIn']['confirmed'];?></span><br>
                         昨日<span class="confirmed"><?php echo $data['summaryDataIn']['confirmedRelative'] > 0 ? '+'.$data['summaryDataIn']['confirmedRelative']:$data['summaryDataIn']['confirmedRelative'];?></span>
                     </span>
 
-                    <span class="tab-span">境外输入
+                    <span class="tab-span-forg">境外输入
                         <span class="overseasInput"><?php echo $data['summaryDataIn']['overseasInput'];?></span><br>
                         昨日<span class="overseasInput"><?php echo $data['summaryDataIn']['overseasInputRelative'] > 0 ? '+'.$data['summaryDataIn']['overseasInputRelative']:$data['summaryDataIn']['overseasInputRelative'];?></span>
                     </span>
 
-                    <span class="tab-span">累计治愈
+                    <span class="tab-span-forg">累计治愈
                         <span class="cured"><?php echo $data['summaryDataIn']['cured'];?></span><br>
                         昨日<span class="cured"><?php echo $data['summaryDataIn']['curedRelative'] > 0 ? '+'.$data['summaryDataIn']['curedRelative']:$data['summaryDataIn']['curedRelative'];?></span>
                     </span>
 
-                    <span class="tab-span">累计死亡
+                    <span class="tab-span-forg">累计死亡
                         <span class="died"><?php echo $data['summaryDataIn']['died'];?></span><br>
                         昨日<span class="died"><?php echo $data['summaryDataIn']['diedRelative'] > 0 ? '+'.$data['summaryDataIn']['diedRelative']:$data['summaryDataIn']['diedRelative'];?></span>
                     </span>
                 </div>
-
+                
                 <!-- 国内资讯 -->
                 <div>
                     <h2 class="center">国内资讯</h2>
@@ -232,12 +238,68 @@ $frtData = isset($data['foreign_realtime_data']) ? $data['foreign_realtime_data'
 					<?php } ?>
                 </div>
             </div>
-            <div class="tab-pane fade" id="big" role="tabpanel" aria-labelledby="big-tab">
-                <!-- 数据分析 -->
-                完成中...
-            </div>
             <div class="tab-pane fade" id="big2" role="tabpanel" aria-labelledby="big2-tab">
-                4444
+                <!-- 今日疫情热搜 -->
+                <div>
+                    <h2 class="center">今日疫情热搜(全国)</h2>
+                    <?php if (isset($hotwords[0]['item'])) {
+                        $hti = 1;
+                        foreach ($hotwords[0]['item'] as $val) { ?>
+                            <div class="hideHw" style="display: <?php echo $hti > 8 ? 'none' : '';?>" >
+                                <h3>
+                                    <a target="_blank" href="<?php echo $val['url'];?>" style="text-decoration:none;color: #4d5054;">
+                                        <?php echo $hti.'、'.$val['query'];?>
+                                    </a>
+                                    <span class="degree">
+                                        <?php echo $val['degree'];?>
+                                    </span>
+                                    <span>
+                                        <?php
+										if (1 === intval($val['type'])) {
+											echo '(<span style="color:#F23F40;">热</span>)';
+										}
+										?>
+                                    </span>
+                                </h3>
+                            </div>
+                            <?php $hti++;} ?>
+                        <div id="hideHw"><a class="text-success other-d" onclick="showHw()">点击查看更多</a></div>
+                    <?php } ?>
+                </div>
+
+                <!-- 复工复课热搜 -->
+                <div style="padding-top:20px;">
+                    <h2 class="center">复工复课热搜</h2>
+                    <?php if (isset($hotwords[3]['item'])) {
+                        $htwi = 1;
+                        foreach ($hotwords[3]['item'] as $val) { ?>
+                            <div class="hideHwi" style="display: <?php echo $htwi > 8 ? 'none' : '';?>" >
+                                <h3>
+                                    <a target="_blank" href="<?php echo $val['url'];?>" style="text-decoration:none;color: #4d5054;">
+                                        <?php echo $htwi.'、'.$val['query'];?>
+                                    </a>
+                                    <span class="degree">
+                                        <?php echo $val['degree'];?>
+                                    </span>
+                                    <span>
+                                        <?php
+										if (1 === intval($val['type'])) {
+											echo '(<span style="color:#F23F40;">热</span>)';
+										}
+										?>
+                                    </span>
+                                </h3>
+                            </div>
+                            <?php $htwi++;} ?>
+                        <div id="hideHwi"><a class="text-success other-d" onclick="showHwi()">点击查看更多</a></div>
+                    <?php } ?>
+                </div>
+
+
+            </div>
+            <div class="tab-pane fade" id="big" role="tabpanel" aria-labelledby="big-tab">
+                <!-- 数据统计 -->
+                完成中...
             </div>
         </div>
 
@@ -252,6 +314,14 @@ $frtData = isset($data['foreign_realtime_data']) ? $data['foreign_realtime_data'
             function showFrt() {
                 $('.hideFrt').show();
                 $('#hideFrt').hide();
+            }
+            function showHw() {
+                $('.hideHw').show();
+                $('#hideHw').hide();
+            }
+            function showHwi() {
+                $('.hideHwi').show();
+                $('#hideHwi').hide();
             }
         </script>
         <script src="js/jquery-3.3.1.min.js"></script>
