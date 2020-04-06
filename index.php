@@ -27,7 +27,7 @@ $info = $corona->index(1);
     </head>
     <body>
         <!--    nav begin    -->
-        <?php include_once ('scripts/nav.php');?>
+		<?php include_once ('views/layout/nav.php');?>
         <!--    nav end    -->
 
         <h2 style="text-align: center;">COVID-19 CORONAVIRUS PANDEMIC</h2>

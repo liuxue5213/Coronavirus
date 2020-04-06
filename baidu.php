@@ -43,7 +43,7 @@ $hotwords = isset($data['hotwords']) ? $data['hotwords'] : array();
     </head>
     <body>
         <!--    nav begin    -->
-	    <?php include_once ('scripts/nav.php');?>
+	    <?php include_once ('views/layout/nav.php');?>
         <!--    nav end    -->
 
         <h1 style="text-align: center; padding: 15px; font-weight: bolder;">

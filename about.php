@@ -18,7 +18,7 @@ $nav = isset($_REQUEST['nav']) ? $_REQUEST['nav']: '';
     </head>
     <body>
         <!--    nav begin    -->
-	    <?php include_once ('scripts/nav.php');?>
+		<?php include_once ('views/layout/nav.php');?>
         <!--    nav end    -->
 
         <h1 style="font-size: 45px; text-align: center; padding-top: 15px; font-weight: bolder;">

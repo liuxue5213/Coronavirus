@@ -5,7 +5,6 @@ $nav = isset($_REQUEST['nav']) ? $_REQUEST['nav']: '';
 <html lang="en">
     <head>
         <meta charset="utf-8">
-
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>COVID-19 CORONAVIRUS PANDEMIC</title>
         <link rel="Shortcut Icon" href="./images/favicon.ico" type="image/x-icon" />
@@ -17,7 +16,7 @@ $nav = isset($_REQUEST['nav']) ? $_REQUEST['nav']: '';
     </head>
     <body>
         <!--    nav begin    -->
-	    <?php include_once ('scripts/nav.php');?>
+		<?php include_once ('views/layout/nav.php');?>
         <!--    nav end    -->
 
         <h2 style="text-align: center;">COVID-19 CORONAVIRUS PANDEMIC</h2>

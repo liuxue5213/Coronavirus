@@ -20,7 +20,7 @@ $nav = isset($_REQUEST['nav']) ? $_REQUEST['nav']: '';
     </head>
     <body>
         <!--    nav begin    -->
-    	<?php include_once ('scripts/nav.php');?>
+		<?php include_once ('views/layout/nav.php');?>
         <!--    nav end    -->
 
         <?php if ($isIp) { ?>
