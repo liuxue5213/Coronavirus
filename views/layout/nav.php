@@ -22,9 +22,33 @@
 			<li class="nav-item <?php echo $nav == 'baidu' ? 'active': '';?>">
 				<a class="nav-link text-white" href="baidu.php?nav=baidu"><b>Baidu</b></a>
 			</li>
-			<li class="nav-item <?php echo $nav == 'about' ? 'active': '';?>">
-				<a class="nav-link text-white" href="about.php?nav=about"><b>About</b></a>
-			</li>
+<!--			<li class="nav-item --><?php //echo $nav == 'subscribe' ? 'active': '';?><!--">-->
+<!--				<a class="nav-link text-white" data-toggle="modal" data-target="#Subscribe" style="text-decoration: cou"><b>Subscribe</b></a>-->
+<!--			</li>-->
+            <li class="nav-item <?php echo $nav == 'about' ? 'active': '';?>">
+                <a class="nav-link text-white" href="about.php?nav=about"><b>About</b></a>
+            </li>
 		</ul>
 	</div>
 </nav>
+
+<!-- Modal -->
+<div class="modal fade" id="Subscribe" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
