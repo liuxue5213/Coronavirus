@@ -16,18 +16,33 @@ $hotwords = isset($data['hotwords']) ? $data['hotwords'] : array();
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>COVID-19 CORONAVIRUS PANDEMIC</title>
         <link rel="Shortcut Icon" href="./images/favicon.ico" type="image/x-icon" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <style>
-            .title{font-size: 26px;}
-            .t1{padding-left: 65px;}
-            .bgc{background-color: #445175;}
+            @media (max-width: 575.98px) {
+                .tab-span-forg{width: 480px;}
+            }
+            @media (min-width: 576px) and (max-width: 767.98px) {
+                .tab-span-forg{width: 400px;}
+            }
+
+            @media (min-width: 768px) and (max-width: 991.98px) {
+                .tab-span-forg{width: 370px;}
+            }
+
+            @media (min-width: 992px) and (max-width: 1199.98px) {
+                .tab-span-forg{width: 370px;}
+            }
+
+            @media (min-width: 1200px) {
+                .tab-span-forg{width: 420px;}
+            }
             .center{text-align: center;}
-            .tab-span{width: 185px;}
-            .tab-span-forg{width: 370px;}
             .summary-data{display: flex;width: 95%;text-align: center;font-size: 22px;padding:20px 5px;}
+            /*.summary-data{display: flex;width: 95%;text-align: center;font-size: 22px;padding:20px 5px;}*/
             .confirm{color: #ff6a57}
             .confirmed{color: #e83132}
             .cured{color: #10aeb5}
@@ -47,8 +62,8 @@ $hotwords = isset($data['hotwords']) ? $data['hotwords'] : array();
         <!--    nav end    -->
 
         <h1 style="text-align: center; padding: 15px; font-weight: bolder;">
-            <img src="https://mms-res.cdn.bcebos.com/voicefe/captain/images/1b9ddd53f65d1b3a4faeca959e15d425c8d85d2f?120*40">
-            <span style="margin-top: 5px;color:#F23F40">百度抗击肺炎专题</span>
+<!--            <img src="https://mms-res.cdn.bcebos.com/voicefe/captain/images/1b9ddd53f65d1b3a4faeca959e15d425c8d85d2f?120*40">-->
+            <span style="margin-top: 5px;color:#F23F40">Baidu抗击肺炎专题</span>
         </h1>
         <!-- <h3>数据来自官方通报 全国与各省通报数据可能存在差异</h3> -->
         <h2 class="center">公告消息</h2>
@@ -77,56 +92,56 @@ $hotwords = isset($data['hotwords']) ? $data['hotwords'] : array();
                 <a class="nav-link" id="foreign-tab" data-toggle="tab" href="#foreign" role="tab" aria-controls="foreign" aria-selected="false">国外疫情</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="big2-tab" data-toggle="tab" href="#big2" role="tab" aria-controls="big2" aria-selected="false">全民热搜</a>
+                <a class="nav-link" id="hot-tab" data-toggle="tab" href="#hot" role="tab" aria-controls="hot" aria-selected="false">全民热搜</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" id="big-tab" data-toggle="tab" href="#big" role="tab" aria-controls="big" aria-selected="false">数据统计</a>
-            </li>
+<!--            <li class="nav-item">-->
+<!--                <a class="nav-link" id="big-tab" data-toggle="tab" href="#big" role="tab" aria-controls="big" aria-selected="false">数据统计</a>-->
+<!--            </li>-->
         </ul>
-        <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+        <div class="container tab-content" id="myTabContent">
+            <div class="row tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                 <!-- 国内疫情情况 -->
                 <div class="summary-data">
-                    <span class="tab-span-forg">现有确诊
+                    <div class="tab-span-forg">现有确诊
                         <span class="confirm"><?php echo $data['summaryDataIn']['curConfirm'];?></span><br>
-                        昨日<span class="confirm"><?php echo $data['summaryDataIn']['curConfirmRelative'] ? '+'.$data['summaryDataIn']['curConfirmRelative']:$data['summaryDataIn']['curConfirmRelative'];?></span>
-                    </span>
+                        昨日<span class="confirm"><?php echo intval($data['summaryDataIn']['curConfirmRelative']) > 0 ? '+'.$data['summaryDataIn']['curConfirmRelative']:$data['summaryDataIn']['curConfirmRelative'];?></span>
+                    </div>
 
-                    <span class="tab-span-forg">无症状
+                    <div class="tab-span-forg">无症状
                         <span class="asymptomatic"><?php echo $data['summaryDataIn']['asymptomatic'];?></span><br>
-                        昨日<span class="asymptomatic"><?php echo $data['summaryDataIn']['asymptomaticRelative'] ? '+'.$data['summaryDataIn']['asymptomaticRelative']:$data['summaryDataIn']['asymptomaticRelative'];?></span>
-                    </span>
+                        昨日<span class="asymptomatic"><?php echo intval($data['summaryDataIn']['asymptomaticRelative']) > 0 ? '+'.$data['summaryDataIn']['asymptomaticRelative']:$data['summaryDataIn']['asymptomaticRelative'];?></span>
+                    </div>
 
-                    <span class="tab-span-forg">现有疑似
+                    <div class="tab-span-forg">现有疑似
                         <span class="unconfirmed"><?php echo $data['summaryDataIn']['unconfirmed'];?></span><br>
-                        昨日<span class="unconfirmed"><?php echo $data['summaryDataIn']['unconfirmedRelative'] > 0 ? '+'.$data['summaryDataIn']['unconfirmedRelative']:$data['summaryDataIn']['unconfirmedRelative'];?></span>
-                    </span>
+                        昨日<span class="unconfirmed"><?php echo intval($data['summaryDataIn']['unconfirmedRelative']) > 0 ? '+'.$data['summaryDataIn']['unconfirmedRelative']:$data['summaryDataIn']['unconfirmedRelative'];?></span>
+                    </div>
 
-                    <span class="tab-span-forg">现有重症
+                    <div class="tab-span-forg">现有重症
                         <span class="icu"><?php echo $data['summaryDataIn']['icu'];?></span><br>
-                        昨日<span class="icu"><?php echo $data['summaryDataIn']['icuRelative'] > 0 ? '+'.$data['summaryDataIn']['icuRelative']:$data['summaryDataIn']['icuRelative'];?></span>
-                    </span>
+                        昨日<span class="icu"><?php echo intval($data['summaryDataIn']['icuRelative']) > 0 ? '+'.$data['summaryDataIn']['icuRelative']:$data['summaryDataIn']['icuRelative'];?></span>
+                    </div>
                 </div>
 
                 <div class="summary-data">
                     <span class="tab-span-forg">累计确诊
                         <span class="confirmed"><?php echo $data['summaryDataIn']['confirmed'];?></span><br>
-                        昨日<span class="confirmed"><?php echo $data['summaryDataIn']['confirmedRelative'] > 0 ? '+'.$data['summaryDataIn']['confirmedRelative']:$data['summaryDataIn']['confirmedRelative'];?></span>
+                        昨日<span class="confirmed"><?php echo intval($data['summaryDataIn']['confirmedRelative']) > 0 ? '+'.$data['summaryDataIn']['confirmedRelative']:$data['summaryDataIn']['confirmedRelative'];?></span>
                     </span>
 
                     <span class="tab-span-forg">境外输入
                         <span class="overseasInput"><?php echo $data['summaryDataIn']['overseasInput'];?></span><br>
-                        昨日<span class="overseasInput"><?php echo $data['summaryDataIn']['overseasInputRelative'] > 0 ? '+'.$data['summaryDataIn']['overseasInputRelative']:$data['summaryDataIn']['overseasInputRelative'];?></span>
+                        昨日<span class="overseasInput"><?php echo intval($data['summaryDataIn']['overseasInputRelative']) > 0 ? '+'.$data['summaryDataIn']['overseasInputRelative']:$data['summaryDataIn']['overseasInputRelative'];?></span>
                     </span>
 
                     <span class="tab-span-forg">累计治愈
                         <span class="cured"><?php echo $data['summaryDataIn']['cured'];?></span><br>
-                        昨日<span class="cured"><?php echo $data['summaryDataIn']['curedRelative'] > 0 ? '+'.$data['summaryDataIn']['curedRelative']:$data['summaryDataIn']['curedRelative'];?></span>
+                        昨日<span class="cured"><?php echo intval($data['summaryDataIn']['curedRelative']) > 0 ? '+'.$data['summaryDataIn']['curedRelative']:$data['summaryDataIn']['curedRelative'];?></span>
                     </span>
 
                     <span class="tab-span-forg">累计死亡
                         <span class="died"><?php echo $data['summaryDataIn']['died'];?></span><br>
-                        昨日<span class="died"><?php echo $data['summaryDataIn']['diedRelative'] > 0 ? '+'.$data['summaryDataIn']['diedRelative']:$data['summaryDataIn']['diedRelative'];?></span>
+                        昨日<span class="died"><?php echo intval($data['summaryDataIn']['diedRelative']) > 0 ? '+'.$data['summaryDataIn']['diedRelative']:$data['summaryDataIn']['diedRelative'];?></span>
                     </span>
                 </div>
                 
@@ -164,22 +179,22 @@ $hotwords = isset($data['hotwords']) ? $data['hotwords'] : array();
                 <div class="summary-data">
                     <span class="tab-span-forg">现有确诊
                         <span class="confirm"><?php echo $data['summaryDataOut']['curConfirm'];?></span><br>
-                        昨日<span class="confirm"><?php echo $data['summaryDataOut']['curConfirmRelative'] > 0 ? '+'.$data['summaryDataOut']['curConfirmRelative']:$data['summaryDataOut']['curConfirmRelative'];?></span>
+                        昨日<span class="confirm"><?php echo intval($data['summaryDataOut']['curConfirmRelative']) > 0 ? '+'.$data['summaryDataOut']['curConfirmRelative']:$data['summaryDataOut']['curConfirmRelative'];?></span>
                     </span>
 
                     <span class="tab-span-forg">累计确诊
                         <span class="confirmed"><?php echo $data['summaryDataOut']['confirmed'];?></span><br>
-                        昨日<span class="confirmed"><?php echo $data['summaryDataOut']['curedRelative'] > 0 ? '+'.$data['summaryDataOut']['confirmedRelative']:$data['summaryDataOut']['curedRelative'];?></span>
+                        昨日<span class="confirmed"><?php echo intval($data['summaryDataOut']['curedRelative']) > 0 ? '+'.$data['summaryDataOut']['confirmedRelative']:$data['summaryDataOut']['curedRelative'];?></span>
                     </span>
 
                     <span class="tab-span-forg">累计治愈
                         <span class="cured"><?php echo $data['summaryDataOut']['cured'];?></span><br>
-                        昨日<span class="cured"><?php echo $data['summaryDataOut']['curedRelative'] > 0 ? '+'.$data['summaryDataOut']['curedRelative']:$data['summaryDataOut']['curedRelative'];?></span>
+                        昨日<span class="cured"><?php echo intval($data['summaryDataOut']['curedRelative']) > 0 ? '+'.$data['summaryDataOut']['curedRelative']:$data['summaryDataOut']['curedRelative'];?></span>
                     </span>
 
                     <span class="tab-span-forg">累计死亡
                         <span class="died"><?php echo $data['summaryDataOut']['died'];?></span><br>
-                        昨日<span class="died"><?php echo $data['summaryDataOut']['diedRelative'] > 0 ? '+'.$data['summaryDataOut']['diedRelative']:$data['summaryDataOut']['diedRelative'];?></span>
+                        昨日<span class="died"><?php echo intval($data['summaryDataOut']['diedRelative']) > 0 ? '+'.$data['summaryDataOut']['diedRelative']:$data['summaryDataOut']['diedRelative'];?></span>
                     </span>
                 </div>
 
@@ -212,7 +227,7 @@ $hotwords = isset($data['hotwords']) ? $data['hotwords'] : array();
 					<?php } ?>
                 </div>
             </div>
-            <div class="tab-pane fade" id="big2" role="tabpanel" aria-labelledby="big2-tab">
+            <div class="tab-pane fade" id="hot" role="tabpanel" aria-labelledby="hot-tab">
                 <!-- 今日疫情热搜 -->
                 <div>
                     <h2 class="center">今日疫情热搜(全国)</h2>
@@ -280,7 +295,6 @@ $hotwords = isset($data['hotwords']) ? $data['hotwords'] : array();
         <script>
             // $(function() {
             // });
-
             function showRt() {
                 $('.hideRt').show();
                 $('#hideRt').hide();

@@ -45,7 +45,7 @@ $nav = isset($_REQUEST['nav']) ? $_REQUEST['nav']: '';
             </h2>
             <p style="font-size: 25px;text-align: center;">
                 This site was created by
-                <strong><a href="http://johnscott1989.club/" target="_blank">JohnScott</a></strong>(click me open my blog)
+                <strong><a href="http://johnscott1989.top/" target="_blank">JohnScott</a></strong>(click me open my blog)
             </p>
         </div>
         <div class="container--wrap center">
