@@ -104,7 +104,7 @@ $info = $corona->index(1);
 
           function formatter(value, row, index) {
               if (row.country_url) {
-                  return '<a class="detail" target="_blank" href="/detail.php?country='+row.country+'&name='+row.name+'" title="'+value+'">'+value+'</a>';
+                  return '<a class="detail" target="_blank" href="/Coronavirus/detail.php?country='+row.country+'&name='+row.name+'" title="'+value+'">'+value+'</a>';
               } else {
                   return value;
               }
