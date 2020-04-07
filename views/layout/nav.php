@@ -22,9 +22,9 @@
 			<li class="nav-item <?php echo $nav == 'baidu' ? 'active': '';?>">
 				<a class="nav-link text-white" href="baidu.php?nav=baidu"><b>Baidu</b></a>
 			</li>
-<!--			<li class="nav-item --><?php //echo $nav == 'subscribe' ? 'active': '';?><!--">-->
-<!--				<a class="nav-link text-white" data-toggle="modal" data-target="#Subscribe" style="text-decoration: cou"><b>Subscribe</b></a>-->
-<!--			</li>-->
+			<li class="nav-item <?php echo $nav == 'subscribe' ? 'active': '';?>">
+				<a class="nav-link text-white" data-toggle="modal" data-target="#Subscribe" style="text-decoration: cou"><b>Subscribe</b></a>
+			</li>
             <li class="nav-item <?php echo $nav == 'about' ? 'active': '';?>">
                 <a class="nav-link text-white" href="about.php?nav=about"><b>About</b></a>
             </li>
@@ -37,18 +37,53 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                <h4 class="modal-title" id="exampleModalLongTitle"><b>订阅</b></h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                ...
+                <h2>Get Info on the Coronavirus</h2>
+                <div class="form-group">
+                    <label for="email">Email Address <span style="color: red">*</span></label><br>
+                    <input id="email" class="form-control" type="email">
+                </div>
+                <div class="form-group">
+                    <label for="name">Name</label><br>
+                    <input id="name" class="form-control" type="text">
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button id="sub" type="button" class="btn btn-primary" onclick="sub()">Subscribe</button>
             </div>
         </div>
     </div>
+    <button type="button" class="btn btn-secondary" data-container="body" data-toggle="popover-dismiss" data-placement="top" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
+        Popover on top
+    </button>
 </div>
+<script>
+    function sub() {
+        var pass = true;
+        var email = $('#email').val();
+        var name = $('#name').val();
+        if (email.trim() == '') {
+            alert('11111');
+            pass = false;
+            return false;
+        }
+        if (name.trim() == '') {
+            alert('22222');
+            pass = false;
+            return false;
+        }
+        if (pass) {
+            $('.popover-dismiss').popover({
+                trigger: 'focus'
+            })
+            return false;
+
+        }
+    }
+</script>
