@@ -48,6 +48,21 @@
                     <label for="email">Email Address <span style="color: red">*</span></label><br>
                     <input id="email" class="form-control" type="email">
                 </div>
+
+                <div id="remind" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header">
+                    <img src="..." class="rounded mr-2" alt="...">
+                    <strong class="mr-auto">Bootstrap</strong>
+                    <small class="text-muted">just now</small>
+                    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="toast-body">
+                    See? Just like this.
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <label for="name">Name</label><br>
                     <input id="name" class="form-control" type="text">
@@ -59,27 +74,41 @@
             </div>
         </div>
     </div>
-    <button type="button" class="btn btn-secondary" data-container="body" data-toggle="popover-dismiss" data-placement="top" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
-        Popover on top
-    </button>
 </div>
+<script src="js/jquery-3.3.1.min.js"></script>
 <script>
+    $(function() {
+        $('#remind').toast('hide');
+    });
+
+    function checkEmail () {
+        var email = $('#email').val();
+        if (email.trim() == '') {
+            $('#remind').toast('show');
+        } else {
+            $('#remind').toast('hide');
+        }
+    }
+    
+
     function sub() {
         var pass = true;
         var email = $('#email').val();
         var name = $('#name').val();
         if (email.trim() == '') {
-            alert('11111');
+            $('#remind').toast('show');
+            $("#email").bind("change", function(){
+                checkEmail();
+            });
             pass = false;
             return false;
         }
         if (name.trim() == '') {
-            alert('22222');
             pass = false;
             return false;
         }
         if (pass) {
-            $('.popover-dismiss').popover({
+            $('.btn-secondary').popover({
                 trigger: 'focus'
             })
             return false;
