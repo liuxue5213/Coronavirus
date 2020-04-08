@@ -66,6 +66,7 @@ $nav = isset($_REQUEST['nav']) ? $_REQUEST['nav']: '';
                 <a style=" font-size: 20px;" href="https://ncov2019.live/about"><u>Avi Schiffmann's Website</u></a><br>
             </div>
         </div>
+        <script src="js/project/nav.js"></script>
   </body>
 </html>
 

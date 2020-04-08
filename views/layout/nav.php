@@ -23,7 +23,7 @@
 				<a class="nav-link text-white" href="baidu.php?nav=baidu"><b>Baidu</b></a>
 			</li>
 			<li class="nav-item <?php echo $nav == 'subscribe' ? 'active': '';?>">
-				<a class="nav-link text-white" data-toggle="modal" data-target="#Subscribe" style="text-decoration: cou"><b>Subscribe</b></a>
+				<a class="nav-link text-white" data-toggle="modal" data-target="#Subscribe" style="cursor: pointer;"><b>Subscribe</b></a>
 			</li>
             <li class="nav-item <?php echo $nav == 'about' ? 'active': '';?>">
                 <a class="nav-link text-white" href="about.php?nav=about"><b>About</b></a>
@@ -44,25 +44,13 @@
             </div>
             <div class="modal-body">
                 <h2>Get Info on the Coronavirus</h2>
+                <div id="remind" class="alert alert-danger" role="alert" style="display: none;">
+                    please input email
+                </div>  
                 <div class="form-group">
                     <label for="email">Email Address <span style="color: red">*</span></label><br>
-                    <input id="email" class="form-control" type="email">
+                    <input id="email" class="form-control" type="email" onchange="checkEmail()">
                 </div>
-
-                <div id="remind" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-                    <div class="toast-header">
-                    <img src="..." class="rounded mr-2" alt="...">
-                    <strong class="mr-auto">Bootstrap</strong>
-                    <small class="text-muted">just now</small>
-                    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                    </div>
-                    <div class="toast-body">
-                    See? Just like this.
-                    </div>
-                </div>
-
                 <div class="form-group">
                     <label for="name">Name</label><br>
                     <input id="name" class="form-control" type="text">
@@ -76,43 +64,3 @@
     </div>
 </div>
 <script src="js/jquery-3.3.1.min.js"></script>
-<script>
-    $(function() {
-        $('#remind').toast('hide');
-    });
-
-    function checkEmail () {
-        var email = $('#email').val();
-        if (email.trim() == '') {
-            $('#remind').toast('show');
-        } else {
-            $('#remind').toast('hide');
-        }
-    }
-    
-
-    function sub() {
-        var pass = true;
-        var email = $('#email').val();
-        var name = $('#name').val();
-        if (email.trim() == '') {
-            $('#remind').toast('show');
-            $("#email").bind("change", function(){
-                checkEmail();
-            });
-            pass = false;
-            return false;
-        }
-        if (name.trim() == '') {
-            pass = false;
-            return false;
-        }
-        if (pass) {
-            $('.btn-secondary').popover({
-                trigger: 'focus'
-            })
-            return false;
-
-        }
-    }
-</script>

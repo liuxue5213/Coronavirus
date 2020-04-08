@@ -31,6 +31,7 @@ $nav = isset($_REQUEST['nav']) ? $_REQUEST['nav']: '';
             //     document.getElementById("mainContent").style.height = (windowsHeight-框架顶部高度) + "px";
             // }
         </script>
+        <script src="js/project/nav.js"></script>
     </body>
 </html>
 

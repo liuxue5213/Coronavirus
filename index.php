@@ -72,7 +72,8 @@ $info = $corona->index(1);
         <script src="js/bootstrap-table-master/dist/themes/foundation/bootstrap-table-foundation.js"></script>
         <script src="js/bootstrap-table-master/dist/extensions/auto-refresh/bootstrap-table-auto-refresh.min.js"></script>
         <script src="js/bootstrap-table-master/dist/extensions/print/bootstrap-table-print.min.js"></script>
-      <script>
+        <script src="js/project/nav.js"></script>
+        <script>
           $(function() {
               $('#table').bootstrapTable()
           });
