@@ -45,17 +45,24 @@ class Corona {
             $key = 'corona';
             $j = 0;
             for ($i = 0; $i <= $count; $i++) {
+				$tmpKey = $key;
                 if ($i % 100 == 0) {
                     $j++;
                     $tmpKey = $key.$j;
                     $this->redisDel($redis, $tmpKey);
                 }
-                if (isset($data[$i]['country']) && $data[$i]['country'] != 'Total:') {
-                	if (isset($data[$i]['country_url']) && $data[$i]['country_url']) {
-                		$tmpK = explode('/', $data[$i]['country_url']);
-						$data[$i]['name'] = isset($tmpK[1]) ? $tmpK[1] : '';
+				$tmpCountry = isset($data[$i]['country']) && $data[$i]['country'] ? $data[$i]['country'] : '';
+                if ($tmpCountry != 'Total:') {
+                	//过滤出世界汇总的数据 2020-04-12
+                	if (in_array($tmpCountry, array('World', 'Europe', 'North America', 'Asia', 'South America', 'Africa', 'Oceania', 'Diamond Princess', 'MS Zaandam'))) {
+						$redis->hSet('world', $tmpCountry, serialize($data[$i]));
+					} else {
+						if (isset($data[$i]['country_url']) && $data[$i]['country_url']) {
+							$tmpK = explode('/', $data[$i]['country_url']);
+							$data[$i]['name'] = isset($tmpK[1]) ? $tmpK[1] : '';
+						}
+						$redis->hSet($tmpKey, $tmpCountry, serialize($data[$i]));
 					}
-                    $redis->hSet($tmpKey, $data[$i]['country'], serialize($data[$i]));
                 }
             }
 

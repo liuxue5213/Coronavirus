@@ -11,20 +11,24 @@
 	<div class="collapse navbar-collapse" id="navbarTogglerDemo03">
 		<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
 			<li class="nav-item <?php echo empty($nav) || $nav == 'index' ? 'active': '';?>">
-				<a class="nav-link text-dark" href="index.php?nav=index"><b>Data</b></a>
+				<a class="nav-link text-dark" href="index.php"><b>Data</b></a>
 			</li>
 			<li class="nav-item <?php echo $nav == 'map' ? 'active': '';?>">
-				<a class="nav-link text-dark" href="map.php?nav=map"><b>Map</b></a>
+				<a class="nav-link text-dark" href="map.php"><b>Map</b></a>
 			</li>
 			<li class="nav-item <?php echo $nav == 'map' ? 'active': '';?>">
-				<a class="nav-link text-dark" href="wiki.php?nav=wiki"><b>Wiki</b></a>
+				<a class="nav-link text-dark" href="wiki.php"><b>Wiki</b></a>
 			</li>
 			<li class="nav-item <?php echo $nav == 'baidu' ? 'active': '';?>">
-				<a class="nav-link text-dark" href="baidu.php?nav=baidu"><b>Baidu</b></a>
+				<a class="nav-link text-dark" href="baidu.php"><b>Baidu</b></a>
 			</li>
+            <li class="nav-item <?php echo $nav == 'subscribe' ? 'active': '';?>">
+                <a class="nav-link text-white" data-toggle="modal" data-target="#Subscribe" style="cursor: pointer;"><b>Subscribe</b></a>
+            </li>
 			<li class="nav-item <?php echo $nav == 'about' ? 'active': '';?>">
-				<a class="nav-link text-dark" href="about.php?nav=about"><b>About</b></a>
+				<a class="nav-link text-dark" href="about.php"><b>About</b></a>
 			</li>
 		</ul>
 	</div>
 </nav>
+<?php include_once ('views/layout/subscribe.php');?>

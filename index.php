@@ -1,10 +1,10 @@
 <?php
 require_once 'data/corona.php';
-$nav = isset($_REQUEST['nav']) ? $_REQUEST['nav']: '';
-//$info = file_get_contents('http://34.80.195.241/Coronavirus/2.php');
-//$info = json_decode($info, true);
+//$nav = isset($_REQUEST['nav']) ? $_REQUEST['nav']: '';
 $corona = new CoronaInfo();
 $info = $corona->index(1);
+
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -42,7 +42,7 @@ $info = $corona->index(1);
               data-show-refresh="true"
               data-auto-refresh="true"
               data-pagination="false"
-              data-url="http://34.80.195.241/Coronavirus/1.php"
+              data-url="http://127.0.0.1:1000/1.php"
               data-side-pagination="server"
               data-show-print="true"
               data-header-style="headerStyle"
