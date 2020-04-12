@@ -45,6 +45,11 @@ class Corona {
             $redis = new Predis($config);
             $key = 'corona';
             $j = 0;
+
+            // echo '<pre>';
+            // print_r($count);
+            // echo '</pre>';
+
             for ($i = 0; $i <= $count; $i++) {
 				$tmpKey = $key;
                 if ($i % 100 == 0) {
@@ -61,8 +66,8 @@ class Corona {
 						if (isset($data[$i]['country_url']) && $data[$i]['country_url']) {
 							$tmpK = explode('/', $data[$i]['country_url']);
 							$data[$i]['name'] = isset($tmpK[1]) ? $tmpK[1] : '';
+                            $redis->hSet($tmpKey, $tmpCountry, serialize($data[$i]));
 						}
-						$redis->hSet($tmpKey, $tmpCountry, serialize($data[$i]));
 					}
                 }
             }
