@@ -51,25 +51,25 @@ class Corona {
             // echo '</pre>';
 
             for ($i = 0; $i <= $count; $i++) {
-				$tmpKey = $key;
+                $tmpKey = '';
                 if ($i % 100 == 0) {
                     $j++;
                     $tmpKey = $key.$j;
                     $this->redisDel($redis, $tmpKey);
                 }
 				$tmpCountry = isset($data[$i]['country']) && $data[$i]['country'] ? $data[$i]['country'] : '';
-                if ($tmpCountry != 'Total:') {
-                	//过滤出世界汇总的数据 2020-04-12
-                	if (in_array($tmpCountry, array('World', 'Europe', 'North America', 'Asia', 'South America', 'Africa', 'Oceania', 'Diamond Princess', 'MS Zaandam'))) {
-						$redis->hSet('world', $tmpCountry, serialize($data[$i]));
-					} else {
-						if (isset($data[$i]['country_url']) && $data[$i]['country_url']) {
-							$tmpK = explode('/', $data[$i]['country_url']);
-							$data[$i]['name'] = isset($tmpK[1]) ? $tmpK[1] : '';
-                            $redis->hSet($tmpKey, $tmpCountry, serialize($data[$i]));
-						}
+            	//过滤出世界汇总的数据 2020-04-12
+            	if (in_array($tmpCountry, array('Total:','World', 'Europe', 'North America', 'Asia', 'South America', 'Africa', 'Oceania', 'Diamond Princess', 'MS Zaandam'))) {
+					$redis->hSet('world', $tmpCountry, serialize($data[$i]));
+				} else {
+					if (isset($data[$i]['country_url']) && $data[$i]['country_url']) {
+						$tmpK = explode('/', $data[$i]['country_url']);
+						$data[$i]['name'] = isset($tmpK[1]) ? $tmpK[1] : '';
 					}
-                }
+                    if (isset($data[$i])) {
+                        $redis->hSet($tmpKey, $tmpCountry, serialize($data[$i]));
+                    }
+				}
             }
 
             if ($return) {
