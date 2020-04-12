@@ -8,6 +8,7 @@ require_once 'baidu/get.php';
 $corona = new Corona();
 $corona->index();
 var_dump('data refresh success');
+echo '1';die;
 
 $ci = new CoronaInfo();
 $ci->index();

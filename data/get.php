@@ -28,7 +28,8 @@ class Corona {
             'serious_critical' => ['td:eq(7)', 'text'],
             'tot_cases_1m' => ['td:eq(8)', 'text'],
             'tot_deaths_1m' => ['td:eq(9)', 'text'],
-            'ost_case' => ['td:eq(10)', 'text'],
+            'tot_test' => ['td:eq(10)', 'text'],
+            'tot_test_1m' => ['td:eq(11)', 'text'],
             'callback' => array('Corona', 'checkNum')
         );
         $rang = '#nav-tabContent tbody tr';
@@ -97,7 +98,7 @@ class Corona {
                 foreach ($keys as $country) {
                     if (isset($rows[$country]) && !in_array($country, $tmpArrs)) {
                         array_push($res, unserialize($rows[$country]));
-                        array_push($tmpArrs, $country);
+                        // array_push($tmpArrs, $country);
                     }
                 }
                 $i++;
