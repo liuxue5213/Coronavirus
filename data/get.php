@@ -3,7 +3,7 @@
  * @Author: anchen
  * @Date:   2020-03-27 17:06:30
  * @Last Modified by:   anchen
- * @Last Modified time: 2020-04-01 17:47:41
+ * @Last Modified time: 2020-04-13 13:47:52
  */
 require_once './common/QueryList.php';
 require_once './common/phpQuery.php';
@@ -28,12 +28,18 @@ class Corona {
             'serious_critical' => ['td:eq(7)', 'text'],
             'tot_cases_1m' => ['td:eq(8)', 'text'],
             'tot_deaths_1m' => ['td:eq(9)', 'text'],
-            'ost_case' => ['td:eq(10)', 'text'],
+            'tot_test' => ['td:eq(10)', 'text'],
+            'tot_test_1m' => ['td:eq(11)', 'text'],
             'callback' => array('Corona', 'checkNum')
         );
         $rang = '#nav-tabContent tbody tr';
         $hj = QueryList::Query($url, $rules, $rang);
         $data = $hj->data;
+
+        echo '<pre>';
+        print_r($data);
+        echo '</pre>';
+        die;
 
         $count = count($data);
         if ($count) {
@@ -45,16 +51,15 @@ class Corona {
             $key = 'corona';
             $j = 0;
             for ($i = 0; $i <= $count; $i++) {
-				$tmpKey = $key;
                 if ($i % 100 == 0) {
                     $j++;
                     $tmpKey = $key.$j;
                     $this->redisDel($redis, $tmpKey);
                 }
-				$tmpCountry = isset($data[$i]['country']) && $data[$i]['country'] ? $data[$i]['country'] : '';
-                if ($tmpCountry != 'Total:') {
+				$tmpCountry = isset($data[$i]['country']) && $data[$i]['country'] ? rtime($data[$i]['country'], ':') : '';
+                if ($tmpCountry) {
                 	//过滤出世界汇总的数据 2020-04-12
-                	if (in_array($tmpCountry, array('World', 'Europe', 'North America', 'Asia', 'South America', 'Africa', 'Oceania', 'Diamond Princess', 'MS Zaandam'))) {
+                	if (in_array($tmpCountry, array('Total', 'World', 'Europe', 'North America', 'Asia', 'South America', 'Africa', 'Oceania', 'Diamond Princess', 'MS Zaandam'))) {
 						$redis->hSet('world', $tmpCountry, serialize($data[$i]));
 					} else {
 						if (isset($data[$i]['country_url']) && $data[$i]['country_url']) {

@@ -3,20 +3,73 @@ require_once 'data/get.php';
 require_once 'data/corona.php';
 require_once 'data/other.php';
 require_once 'baidu/get.php';
+require_once 'common/config.php';
+require_once 'common/RabbitMQCommand.php';
 
 //liuxue5213.github.io
 $corona = new Corona();
 $corona->index();
 var_dump('data refresh success');
 
-$ci = new CoronaInfo();
-$ci->index();
-var_dump('info refresh success');
+// require_once 'common/redis.php';
+// require_once 'common/checkIp.php';
+// require_once 'data/corona.php';
 
-$oc = new OtherCountry();
-$data = $oc->index();
-var_dump('info refresh success');
+// $config = array(
+//     'host' => '127.0.0.1',
+//     'port' => '6379'
+// );
+// $redis = new Predis($config);
+// if ($redis->exists('coronaInfo')) {
+//     $info = $redis->hGetAll('coronaInfo');
+// } else {
+//     $corona = new CoronaInfo();
+//     $info = $corona->index(1);
+// }
+// print_r(json_encode($info));
 
-$baidu = new Baidu();
-$data = $baidu->index(1);
-var_dump('baidu refresh success');
+
+// $configs = array('host'=>'127.0.0.1','port'=>5672,'username'=>'test','password'=>'123456','vhost'=>'/');
+// $exchange_name = 'ex_email';
+// $queue_name = 'q_email';
+// $route_key = 'key_email';
+// $ra = new RabbitMQCommand($configs,$exchange_name,$queue_name,$route_key);
+// for($i=0;$i<=100;$i++){
+//     $ra->send(date('Y-m-d H:i:s',time()));
+// }
+// 
+
+// $configs = array('host'=>'127.0.0.1','port'=>5672,'username'=>'test','password'=>'123456','vhost'=>'/');
+// $exchange_name = 'ex_email';
+// $queue_name = 'q_email';
+// $route_key = 'key_email';
+// $ra = new RabbitMQCommand($configs,$exchange_name,$queue_name,$route_key);
+// class A{
+//     function processMessage($envelope, $queue) {
+//         $msg = $envelope->getBody();
+//         $envelopeID = $envelope->getDeliveryTag();
+//         $pid = posix_getpid();
+//         file_put_contents("log{$pid}.log", $msg.'|'.$envelopeID.''."\r\n",FILE_APPEND);
+//         $queue->ack($envelopeID);
+//     }
+// }
+// $a = new A();
+// $s = $ra->run(array($a,'processMessage'),false);
+
+
+
+
+
+
+
+// $ci = new CoronaInfo();
+// $ci->index();
+// var_dump('info refresh success');
+
+// $oc = new OtherCountry();
+// $data = $oc->index();
+// var_dump('info refresh success');
+
+// $baidu = new Baidu();
+// $data = $baidu->index(1);
+// var_dump('baidu refresh success');

@@ -57,9 +57,9 @@ $info = $corona->index(1);
                     <th data-field="total_recovered" data-sortable="true">治愈数量</th>
                     <th data-field="active_cases" data-sortable="true">现存确诊</th>
                     <th data-field="serious_critical" data-sortable="true">重症病例</th>
-                    <th data-field="tot_cases_1m" data-sortable="true">每百万确诊数</th>
-                    <th data-field="tot_deaths_1m" data-sortable="true">每百万死亡数</th>
-                    <th data-field="ost_case" data-sortable="true">首例时间</th>
+<!--                    <th data-field="tot_cases_1m" data-sortable="true">每百万确诊数</th>-->
+<!--                    <th data-field="tot_deaths_1m" data-sortable="true">每百万死亡数</th>-->
+<!--                    <th data-field="ost_case" data-sortable="true">首例时间</th>-->
                 </tr>
             </thead>
         </table>
