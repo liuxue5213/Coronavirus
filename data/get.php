@@ -50,12 +50,22 @@ class Corona {
             $redis = new Predis($config);
             $key = 'corona';
             $j = 0;
+
+            // echo '<pre>';
+            // print_r($count);
+            // echo '</pre>';
+
             for ($i = 0; $i <= $count; $i++) {
+<<<<<<< HEAD
+=======
+                $tmpKey = '';
+>>>>>>> 27b2635ccac948409d52f1a9b467dd4018cee4c6
                 if ($i % 100 == 0) {
                     $j++;
                     $tmpKey = $key.$j;
                     $this->redisDel($redis, $tmpKey);
                 }
+<<<<<<< HEAD
 				$tmpCountry = isset($data[$i]['country']) && $data[$i]['country'] ? rtime($data[$i]['country'], ':') : '';
                 if ($tmpCountry) {
                 	//过滤出世界汇总的数据 2020-04-12
@@ -67,8 +77,21 @@ class Corona {
 							$data[$i]['name'] = isset($tmpK[1]) ? $tmpK[1] : '';
 						}
 						$redis->hSet($tmpKey, $tmpCountry, serialize($data[$i]));
+=======
+				$tmpCountry = isset($data[$i]['country']) && $data[$i]['country'] ? $data[$i]['country'] : '';
+            	//过滤出世界汇总的数据 2020-04-12
+            	if (in_array($tmpCountry, array('Total:','World', 'Europe', 'North America', 'Asia', 'South America', 'Africa', 'Oceania', 'Diamond Princess', 'MS Zaandam'))) {
+					$redis->hSet('world', $tmpCountry, serialize($data[$i]));
+				} else {
+					if (isset($data[$i]['country_url']) && $data[$i]['country_url']) {
+						$tmpK = explode('/', $data[$i]['country_url']);
+						$data[$i]['name'] = isset($tmpK[1]) ? $tmpK[1] : '';
+>>>>>>> 27b2635ccac948409d52f1a9b467dd4018cee4c6
 					}
-                }
+                    if (isset($data[$i])) {
+                        $redis->hSet($tmpKey, $tmpCountry, serialize($data[$i]));
+                    }
+				}
             }
 
             if ($return) {
@@ -102,7 +125,7 @@ class Corona {
                 foreach ($keys as $country) {
                     if (isset($rows[$country]) && !in_array($country, $tmpArrs)) {
                         array_push($res, unserialize($rows[$country]));
-                        array_push($tmpArrs, $country);
+                        // array_push($tmpArrs, $country);
                     }
                 }
                 $i++;

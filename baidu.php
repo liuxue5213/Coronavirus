@@ -160,7 +160,7 @@ $hotwords = isset($data['hotwords']) ? $data['hotwords'] : array();
                                     <p>
                                     <span>
                                         <?php
-                                        echo date('Y-m-d H:i', $val['eventTime']);
+                                        echo date('Y-m-d H:i', $val['eventTime']+8*60*60);
                                         if ($nowDay == date('Y-m-d', $val['eventTime'])) {
                                             echo '(<span style="color:#F23F40;">新</span>)';
                                         }
@@ -213,7 +213,7 @@ $hotwords = isset($data['hotwords']) ? $data['hotwords'] : array();
                                 <p>
                                     <span>
                                         <?php
-										echo date('Y-m-d H:i', $val['eventTime']);
+										echo date('Y-m-d H:i', $val['eventTime']+8*60*60);
 										if ($nowDay == date('Y-m-d', $val['eventTime'])) {
 											echo '(<span style="color:#F23F40;">新</span>)';
 										}
