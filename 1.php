@@ -5,8 +5,6 @@
  * @Last Modified by:   anchen
  * @Last Modified time: 2020-04-13 13:47:39
  */
-require_once 'data/get.php';
-
 $config = array(
     'host' => '127.0.0.1',
     'port' => '6379'

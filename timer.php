@@ -1,13 +1,12 @@
 <?php
-require_once 'data/get.php';
 require_once 'data/corona.php';
-require_once 'data/other.php';
-require_once 'baidu/get.php';
-require_once 'common/config.php';
-require_once 'common/RabbitMQCommand.php';
+// require_once 'data/other.php';
+// require_once 'baidu/get.php';
+// require_once 'common/config.php';
+// require_once 'common/RabbitMQCommand.php';
 
 //liuxue5213.github.io
-$corona = new Corona();
+$corona = new CoronaInfo();
 $corona->index();
 var_dump('data refresh success');
 
