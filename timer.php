@@ -1,14 +1,24 @@
 <?php
-require_once 'data/corona.php';
+require_once 'data/Producer.php';
 // require_once 'data/other.php';
 // require_once 'baidu/get.php';
 // require_once 'common/config.php';
 // require_once 'common/RabbitMQCommand.php';
 
 //liuxue5213.github.io
-$corona = new CoronaInfo();
-$corona->index();
-var_dump('data refresh success');
+$prod = new Producer();
+// var_dump('world refresh start');
+// $prod->worldInfo();
+// var_dump('world refresh end');
+
+var_dump('country refresh start');
+$prod->countryInfo();
+var_dump('country refresh end');
+
+// var_dump('detail refresh start');
+// $prod->detail();
+// var_dump('detail refresh end');
+
 
 // require_once 'common/redis.php';
 // require_once 'common/checkIp.php';

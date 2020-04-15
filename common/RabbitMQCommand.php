@@ -127,7 +127,7 @@ class RabbitMQCommand{
             $this->_exchange->setFlags(AMQP_DURABLE);
         if ($this->autodelete)
             $this->_exchange->setFlags(AMQP_AUTODELETE);
-        $this->_exchange->declare();
+        $this->_exchange->declareExchange();
 
         $this->_queue = new AMQPQueue($this->_channel);
         $this->_queue->setName($this->queue_name);
@@ -137,7 +137,7 @@ class RabbitMQCommand{
             $this->_queue->setFlags(AMQP_AUTODELETE);
         if ($this->mirror) 
             $this->_queue->setArgument('x-ha-policy', 'all');
-        $this->_queue->declare();
+        $this->_queue->declareQueue();
         
         $this->_queue->bind($this->exchange_name, $this->route_key);
     }
