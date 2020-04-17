@@ -1,19 +1,17 @@
 <?php
-require_once 'data/get.php';
-require_once 'data/other.php';
+require_once 'data/getData.php';
 
-//header("Access-Control-Allow-Origin：http://34.80.195.241");
 $tmpArr = $info = array();
 $country = isset($_REQUEST['country']) && $_REQUEST['country']? $_REQUEST['country'] : '';
 $name = isset($_REQUEST['name']) && $_REQUEST['name']? $_REQUEST['name'] : '';
 //获取国家最新信息
+$dt = new DataInfo();
 if ($country) {
-	$co = new Corona();
-	$info = $co->getCountry($country);
+    $info = $dt->CoronaInfo('corona', $country);
 }
+
 if ($name) {
-	$oc = new OtherCountry();
-	$rows = $oc->index($name);
+    $rows = $dt->CoronaInfo($name, 'detail');
 	if ($rows) {
 		$i = 0;
 		foreach ($rows as $key => $val) {

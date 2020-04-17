@@ -3,20 +3,22 @@
  * @Author: anchen
  * @Date:   2020-03-27 11:02:44
  * @Last Modified by:   anchen
- * @Last Modified time: 2020-04-13 13:47:39
+ * @Last Modified time: 2020-04-17 16:42:00
  */
-$config = array(
-    'host' => '127.0.0.1',
-    'port' => '6379'
-);
+require_once './data/Producer.php';
+require_once './data/getData.php';
+require_once './common/config.php';
+
+$config = (new Config())->redisConfig();
 $redis = new Predis($config);
 // $redis->flushDB();
 $key = 'corona';
-$corona = new Corona();
-if ($redis->exists('corona1')) {
-    $data = $corona->redisGetAll($redis, $key);
+$dt = new DataInfo();
+if ($redis->exists('corona')) {
+    $data = $dt->indexData($redis, $key);
 } else {
-    $data = $corona->index(1);
+    $prod->worldInfo();
+    $prod->countryInfo();
 }
 
 print_r(json_encode(array(

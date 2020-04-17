@@ -1,9 +1,8 @@
 <?php
-require_once 'data/corona.php';
+require_once './data/getData.php';
 //$nav = isset($_REQUEST['nav']) ? $_REQUEST['nav']: '';
-$corona = new CoronaInfo();
-$info = $corona->index(1);
-
+$dt = new DataInfo();
+$info = $dt->CoronaInfo('coronaInfo', 'title');
 
 ?>
 <!doctype html>
@@ -38,6 +37,7 @@ $info = $corona->index(1);
         </div>
         <div class='title t1'><span>Last Updated Time: <?php echo $info['last_updated'];?></span></div>
         <div class='title t1'><span>May heaven have no coronavirus--JohnScott（愿天堂没有冠状病毒--超级帽子戏法）</span></div>
+        <!--    http://34.80.195.241/Coronavirus/1.php    -->
         <table id="table"
               data-show-refresh="true"
               data-auto-refresh="true"

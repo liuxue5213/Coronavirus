@@ -1,9 +1,6 @@
 <?php
 require_once 'data/Producer.php';
-// require_once 'data/other.php';
 // require_once 'baidu/get.php';
-// require_once 'common/config.php';
-// require_once 'common/RabbitMQCommand.php';
 
 //liuxue5213.github.io
 $prod = new Producer();
@@ -12,8 +9,11 @@ $prod = new Producer();
 // var_dump('world refresh end');
 
 var_dump('country refresh start');
-$prod->countryInfo();
+// $prod->countryInfo();
 var_dump('country refresh end');
+
+$prod->detail('italy');
+
 
 // var_dump('detail refresh start');
 // $prod->detail();

@@ -190,7 +190,8 @@ class QueryList
         $this->pqHtml = '';
         if(empty($this->html)){
             $this->_log('The received content is empty!','error');
-            trigger_error('The received content is empty!',E_USER_NOTICE);
+            // trigger_error('The received content is empty!',E_USER_NOTICE);
+            return '';
         }
         //获取编码格式
         $this->htmlEncoding = $this->inputEncoding?$this->inputEncoding:$this->_getEncode($this->html);
