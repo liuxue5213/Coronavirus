@@ -1,7 +1,7 @@
 <?php
 define('BASE_PATH', str_replace('\\','/',realpath(dirname(__FILE__).'/'))."/");
-require_once BASE_PATH.'data/Producer.php';
-require_once BASE_PATH.'baidu/prod.php';
+include BASE_PATH.'data/Producer.php';
+include BASE_PATH.'baidu/prod.php';
 
 //liuxue5213.github.io
 $prod = new Producer();
