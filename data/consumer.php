@@ -1,7 +1,7 @@
 <?php
-require_once './common/common.php';
-require_once './common/RabbitMQCommand.php';
-require_once './common/redis.php';
+include './common/common.php';
+include './common/RabbitMQCommand.php';
+include './common/redis.php';
 
 use QL\QueryList;
 
