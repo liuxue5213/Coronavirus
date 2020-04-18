@@ -155,7 +155,9 @@ class Producer
             $tmpDateArr[] = $data[0]['news_date'];
             $tmpArr = explode(' ', $data[0]['btn_date']);
             for ($i=0; $i < count($tmpArr); $i+=2) {
-                $tmpDateArr[] = $tmpArr[$i].' '.$tmpArr[$i+1];
+                if (isset($tmpArr[$i]) && isset($tmpArr[$i+1])) {
+                    $tmpDateArr[] = $tmpArr[$i].' '.$tmpArr[$i+1];
+                }
             }
 
             //拆分内容
