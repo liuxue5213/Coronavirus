@@ -1,10 +1,10 @@
 <?php
 define('BASE_PATH', str_replace('\\','/',realpath(dirname(__FILE__).'/'))."/");
 include BASE_PATH.'data/consumer.php';
-include BASE_PATH.'common/config.php';
+include BASE_PATH.'common/Common.php';
 include BASE_PATH.'common/RabbitMQCommand.php';
 
-$rabbitConfig = (new CommonConfig())->rabbitConfig();
+$rabbitConfig = (new Common())->rabbitConfig();
 $exchange_name = 'ex_corona';
 $queue_name = 'q_corona';
 $route_key = 'key_corona';

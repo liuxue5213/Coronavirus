@@ -3,12 +3,12 @@
  * @Author: anchen
  * @Date:   2020-03-27 17:06:30
  * @Last Modified by:   anchen
- * @Last Modified time: 2020-04-18 10:59:41
+ * @Last Modified time: 2020-04-18 14:01:05
  */
 require_once './common/phpQuery.php';
 require_once './common/QueryList.php';
 require_once './common/curl.php';
-require_once './common/config.php';
+require_once './common/Common.php';
 require_once './common/logger.php';
 require_once './common/RabbitMQCommand.php';
 
@@ -32,7 +32,7 @@ class BaiduProd
             if ($tmpArr) {
                 $i = 0;
                 $sRows = array();
-                $rabbitConfig = (new Config())->rabbitConfig();
+                $rabbitConfig = (new Common())->rabbitConfig();
                 $exchange_name = 'ex_corona';
                 $queue_name = 'q_corona';
                 $route_key = 'key_corona';
