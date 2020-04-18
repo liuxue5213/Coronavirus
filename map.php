@@ -23,14 +23,6 @@ $nav = isset($_REQUEST['nav']) ? $_REQUEST['nav']: '';
         <h4>This map is ran by BNO News, however I am working on a new map that will be out by the end of the week! Thank you for waiting, the new version will be synced with the data page and allow for more information to be displayed. - Avi</h4>
         <p>需要可以访问google map 才可以正常加载</p>
         <iframe id="mainContent" width="100%" height="850px;" src="https://www.google.com/maps/d/embed?mid=1a04iBi41DznkMaQRnICO40ktROfnMfMx" allowfullscreen></iframe>
-        <script>
-            // reSetSize();
-            // window.onresize = reSetSize;
-            // function reSetSize() {
-            //     var windowsHeight = window.innerHeight;
-            //     document.getElementById("mainContent").style.height = (windowsHeight-框架顶部高度) + "px";
-            // }
-        </script>
         <script src="js/project/nav.js"></script>
     </body>
 </html>

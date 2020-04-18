@@ -3,11 +3,11 @@
  * @Author: anchen
  * @Date:   2020-03-27 11:02:44
  * @Last Modified by:   anchen
- * @Last Modified time: 2020-04-17 16:42:00
+ * @Last Modified time: 2020-04-18 09:54:36
  */
-require_once './data/Producer.php';
-require_once './data/getData.php';
-require_once './common/config.php';
+require_once './Producer.php';
+require_once './getData.php';
+require_once '../common/config.php';
 
 $config = (new Config())->redisConfig();
 $redis = new Predis($config);

@@ -1,17 +1,20 @@
 <?php
-// header("Access-Control-Allow-Origin：http://34.80.195.241");
-require_once 'baidu/get.php';
-$nav = isset($_REQUEST['nav']) ? $_REQUEST['nav']: '';
-$baidu = new Baidu();
-$data = $baidu->getData();
+require_once './data/getData.php';
+// $nav = isset($_REQUEST['nav']) ? $_REQUEST['nav']: '';
 $nowDay = date('Y-m-d');
+$dt = new DataInfo();
+$data = $dt->CoronaInfo('baidu', '', '');
+if (count($data)) {
+    $data = array_combine(array_column($data, 'tmp_key'), array_column($data, 'content'));
+}
+
 $trumpet = isset($data['trumpet']) ? $data['trumpet'] : array();
 $rtData = isset($data['realtime_data']) ? $data['realtime_data'] : array();
 $frtData = isset($data['foreign_realtime_data']) ? $data['foreign_realtime_data'] : array();
 $hotwords = isset($data['hotwords']) ? $data['hotwords'] : array();
-//print_r($hotwords[0]['item']);
-//die;
+
 ?>
+
 <!doctype html>
 <html lang="en">
     <head>

@@ -4,7 +4,6 @@ require_once './common/QueryList.php';
 require_once './common/phpQuery.php';
 require_once './common/config.php';
 require_once './common/RabbitMQCommand.php';
-require_once './common/redis.php';
 
 use QL\QueryList;
 
@@ -154,30 +153,29 @@ class Producer
 
         if (isset($data[0])) {
             //起始日期
-            $tmpDateArr = $data[0]['news_date'];
+            $tmpDateArr[] = $data[0]['news_date'];
+            $tmpArr = explode(' ', $data[0]['btn_date']);
+            for ($i=0; $i < count($tmpArr); $i+=2) {
+                $tmpDateArr[] = $tmpArr[$i].' '.$tmpArr[$i+1];
+            }
 
-            // preg_grep_all(pattern, input)
-
-            // $tmpArr = explode('<i class="fa fa-chevron-circle-down"></i>', $data[0]['btn_date']);
-            // $tmpArr = explode(' ', $tmpArr[0]);
-            // print_r($tmpArr);
-            // die;
             //拆分内容
             $tmpCont = str_replace('<img alt="alert" src="/images/alert.png" style="width: 16px;">', '', $data[0]['cont']);
             $tmpContArr = array_values(array_filter(explode('<li class="news_li">', $tmpCont)));
             
-
-            for ($i=0; $i <= $count; $i++) {
-                if (isset($tmpDateArr[$i])) {
+            for ($i=0; $i <= count($tmpDateArr); $i++) {
+                if (!empty($tmpContArr[$i]) && !empty($tmpDateArr[$i])) {
                     $res['name'] = $tmpKey;
-                    $res['data'][$i]['tmp_key'] = 'detail';
-                    $res['data'][$i][$tmpDateArr[$i]] = rtrim($tmpContArr[$i], '</li>');
+                    $res['data'][$i]['tmp_key'] = $tmpDateArr[$i];
+                    $res['data'][$i]['content'] = rtrim($tmpContArr[$i], '</li>');
                 }
             }
         }
 
         return $res;
     }
+
+    
 
     // public function countryInfo2()
     // {

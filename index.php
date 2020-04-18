@@ -37,12 +37,11 @@ $info = $dt->CoronaInfo('coronaInfo', 'title');
         </div>
         <div class='title t1'><span>Last Updated Time: <?php echo $info['last_updated'];?></span></div>
         <div class='title t1'><span>May heaven have no coronavirus--JohnScott（愿天堂没有冠状病毒--超级帽子戏法）</span></div>
-        <!--    http://34.80.195.241/Coronavirus/1.php    -->
         <table id="table"
               data-show-refresh="true"
               data-auto-refresh="true"
               data-pagination="false"
-              data-url="http://34.80.195.241/Coronavirus/1.php"
+              data-url="http://34.80.195.241/Coronavirus/data/1.php"
               data-side-pagination="server"
               data-show-print="true"
               data-header-style="headerStyle"
