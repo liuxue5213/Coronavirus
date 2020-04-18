@@ -35,7 +35,7 @@ class Producer
         $data = $hj->data;
 
         if (isset($data[0])) {
-            $rabbitConfig = (new Config())->rabbitConfig();
+            $rabbitConfig = (new CommonConfig())->rabbitConfig();
             $exchange_name = 'ex_corona';
             $queue_name = 'q_corona';
             $route_key = 'key_corona';
@@ -78,7 +78,7 @@ class Producer
         $data = $hj->data;
         
         if ($data) {
-            $rabbitConfig = (new Config())->rabbitConfig();
+            $rabbitConfig = (new CommonConfig())->rabbitConfig();
             $exchange_name = 'ex_corona';
             $queue_name = 'q_corona';
             $route_key = 'key_corona';

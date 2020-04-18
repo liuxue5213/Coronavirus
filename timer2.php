@@ -4,7 +4,7 @@ include BASE_PATH.'data/consumer.php';
 include BASE_PATH.'common/config.php';
 include BASE_PATH.'common/RabbitMQCommand.php';
 
-$rabbitConfig = (new Config())->rabbitConfig();
+$rabbitConfig = (new CommonConfig())->rabbitConfig();
 $exchange_name = 'ex_corona';
 $queue_name = 'q_corona';
 $route_key = 'key_corona';

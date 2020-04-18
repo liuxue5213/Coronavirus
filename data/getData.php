@@ -3,7 +3,7 @@
  * @Author: anchen
  * @Date:   2020-03-27 17:06:30
  * @Last Modified by:   anchen
- * @Last Modified time: 2020-04-18 11:13:42
+ * @Last Modified time: 2020-04-18 13:53:27
  */
 require_once './common/redis.php';
 require_once './common/config.php';
@@ -35,7 +35,7 @@ class DataInfo
     public function CoronaInfo($keyName, $field = '', $isSort = 'total_cases')
     {
         $res = array();
-        $config = (new Config())->redisConfig();
+        $config = (new CommonConfig())->redisConfig();
         $redis = new Predis($config);
         if ($field) {
             $res = $redis->hget($keyName, $field);

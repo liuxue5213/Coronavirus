@@ -14,7 +14,7 @@ class Consumer
         $msg = $envelope->getBody();
         $rows = unserialize($msg);
         if ($rows) {
-            $config = (new Config())->redisConfig();
+            $config = (new CommonConfig())->redisConfig();
             $redis = new Predis($config);
             foreach ($rows['data'] as $key => $val) {
                 $tmpKey = isset($val['tmp_key']) && $val['tmp_key'] ? $val['tmp_key'] : '';
