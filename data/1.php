@@ -3,11 +3,11 @@
  * @Author: anchen
  * @Date:   2020-03-27 11:02:44
  * @Last Modified by:   anchen
- * @Last Modified time: 2020-04-18 16:46:08
+ * @Last Modified time: 2020-04-18 16:49:40
  */
-include_once './producer.php';
-include_once './getData.php';
-include_once '../common/common.php';
+include_once './data/producer.php';
+include_once '.data/getData.php';
+include_once './common/common.php';
 
 $config = (new CommonConfig())->redisConfig();
 $redis = new Predis($config);
