@@ -108,7 +108,6 @@ class Producer
                             $detail = $this->detail($val['name']);
                             if ($detail) {
                                 $ra->send(serialize($detail));
-                        //         var_dump('refresh detail '.$tmpCountry.' success:'.date('Y-m-d H:i:s'));
                             }
                         }
                     }
