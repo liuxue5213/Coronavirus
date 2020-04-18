@@ -6,7 +6,7 @@
  * @Last Modified time: 2020-04-18 14:01:47
  */
 require_once './common/redis.php';
-require_once './common/Common.php';
+require_once './common/common.php';
 
 use QL\QueryList;
 
@@ -35,7 +35,7 @@ class DataInfo
     public function CoronaInfo($keyName, $field = '', $isSort = 'total_cases')
     {
         $res = array();
-        $config = (new Common())->redisConfig();
+        $config = (new CommonConfig())->redisConfig();
         $redis = new Predis($config);
         if ($field) {
             $res = $redis->hget($keyName, $field);

@@ -7,9 +7,9 @@
  */
 require_once './Producer.php';
 require_once './getData.php';
-require_once '../common/config.php';
+require_once '../common/common.php';
 
-$config = (new Config())->redisConfig();
+$config = (new CommonConfig())->redisConfig();
 $redis = new Predis($config);
 // $redis->flushDB();
 $key = 'corona';

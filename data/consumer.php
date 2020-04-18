@@ -1,5 +1,5 @@
 <?php
-require_once './common/Common.php';
+require_once './common/common.php';
 require_once './common/RabbitMQCommand.php';
 require_once './common/redis.php';
 
@@ -14,7 +14,7 @@ class Consumer
         $msg = $envelope->getBody();
         $rows = unserialize($msg);
         if ($rows) {
-            $config = (new Common())->redisConfig();
+            $config = (new CommonConfig())->redisConfig();
             $redis = new Predis($config);
             foreach ($rows['data'] as $key => $val) {
                 $tmpKey = isset($val['tmp_key']) && $val['tmp_key'] ? $val['tmp_key'] : '';

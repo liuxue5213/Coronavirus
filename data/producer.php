@@ -2,7 +2,7 @@
 
 require_once './common/QueryList.php';
 require_once './common/phpQuery.php';
-require_once './common/Common.php';
+require_once './common/common.php';
 require_once './common/RabbitMQCommand.php';
 
 use QL\QueryList;
@@ -35,7 +35,7 @@ class Producer
         $data = $hj->data;
 
         if (isset($data[0])) {
-            $rabbitConfig = (new Common())->rabbitConfig();
+            $rabbitConfig = (new CommonConfig())->rabbitConfig();
             $exchange_name = 'ex_corona';
             $queue_name = 'q_corona';
             $route_key = 'key_corona';
@@ -78,7 +78,7 @@ class Producer
         $data = $hj->data;
         
         if ($data) {
-            $rabbitConfig = (new Common())->rabbitConfig();
+            $rabbitConfig = (new CommonConfig())->rabbitConfig();
             $exchange_name = 'ex_corona';
             $queue_name = 'q_corona';
             $route_key = 'key_corona';
