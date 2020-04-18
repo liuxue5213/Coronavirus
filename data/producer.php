@@ -105,10 +105,10 @@ class Producer
 
                         //详情
                         if ($val['name']) {
-                            $detail = $this->detail($val['name']);
-                            if ($detail) {
-                                $ra->send(serialize($detail));
-                            }
+                            // $detail = $this->detail($val['name']);
+                            // if ($detail) {
+                            //     $ra->send(serialize($detail));
+                            // }
                         }
                     }
                     $tmpArr['data'][] = $val;
