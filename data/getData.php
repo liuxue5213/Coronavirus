@@ -3,10 +3,10 @@
  * @Author: anchen
  * @Date:   2020-03-27 17:06:30
  * @Last Modified by:   anchen
- * @Last Modified time: 2020-04-18 14:01:47
+ * @Last Modified time: 2020-04-18 16:50:52
  */
-require_once './common/redis.php';
-require_once './common/common.php';
+include_once './common/redis.php';
+include_once './common/common.php';
 
 use QL\QueryList;
 
