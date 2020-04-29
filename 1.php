@@ -3,11 +3,14 @@
  * @Author: anchen
  * @Date:   2020-03-27 11:02:44
  * @Last Modified by:   anchen
- * @Last Modified time: 2020-04-18 17:14:39
+ * @Last Modified time: 2020-04-29 09:54:49
  */
-include_once './common/common.php';
-include_once './data/producer.php';
-include_once './data/getData.php';
+if (!defined('BASE_PATH')) {
+    define('BASE_PATH', str_replace('\\','/',realpath(dirname(__FILE__).'/'))."/");
+}
+include_once BASE_PATH.'./common/common.php';
+include_once BASE_PATH.'./data/producer.php';
+include_once BASE_PATH.'./data/getData.php';
 
 $config = (new CommonConfig())->redisConfig();
 $redis = new Predis($config);

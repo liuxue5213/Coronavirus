@@ -1,5 +1,5 @@
 <?php
-if (defined('BASE_PATH')) {
+if (!defined('BASE_PATH')) {
     define('BASE_PATH', str_replace('\\','/',realpath(dirname(__FILE__).'/'))."/");
 }
 include BASE_PATH.'./common/common.php';
