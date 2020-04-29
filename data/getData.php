@@ -1,12 +1,7 @@
 <?php
-/**
- * @Author: anchen
- * @Date:   2020-03-27 17:06:30
- * @Last Modified by:   anchen
- * @Last Modified time: 2020-04-18 16:50:52
- */
-include_once './common/redis.php';
-include_once './common/common.php';
+define('BASE_PATH', str_replace('\\','/',realpath(dirname(__FILE__).'/'))."/");
+include_once BASE_PATH.'./common/redis.php';
+include_once BASE_PATH.'./common/common.php';
 
 use QL\QueryList;
 

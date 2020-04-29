@@ -1,7 +1,8 @@
 <?php
-include './common/common.php';
-include './common/RabbitMQCommand.php';
-include './common/redis.php';
+define('BASE_PATH', str_replace('\\','/',realpath(dirname(__FILE__).'/'))."/");
+include BASE_PATH.'./common/common.php';
+include BASE_PATH.'./common/RabbitMQCommand.php';
+include BASE_PATH.'./common/redis.php';
 
 use QL\QueryList;
 

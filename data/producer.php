@@ -1,9 +1,9 @@
 <?php
-
-require_once './common/QueryList.php';
-require_once './common/phpQuery.php';
-require_once './common/common.php';
-require_once './common/RabbitMQCommand.php';
+define('BASE_PATH', str_replace('\\','/',realpath(dirname(__FILE__).'/'))."/");
+require_once BASE_PATH.'./common/QueryList.php';
+require_once BASE_PATH.'./common/phpQuery.php';
+require_once BASE_PATH.'./common/common.php';
+require_once BASE_PATH.'./common/RabbitMQCommand.php';
 
 use QL\QueryList;
 
