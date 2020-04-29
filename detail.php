@@ -1,5 +1,6 @@
 <?php
-require_once './data/getData.php';
+define('BASE_PATH', str_replace('\\','/',realpath(dirname(__FILE__).'/'))."/");
+include_once './data/getData.php';
 
 $tmpArr = $info = array();
 $country = isset($_REQUEST['country']) && $_REQUEST['country']? $_REQUEST['country'] : '';

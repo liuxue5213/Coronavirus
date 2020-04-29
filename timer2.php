@@ -1,8 +1,8 @@
 <?php
 define('BASE_PATH', str_replace('\\','/',realpath(dirname(__FILE__).'/'))."/");
-include_once 'data/consumer.php';
-include_once 'common/common.php';
-include_once 'common/RabbitMQCommand.php';
+include_once BASE_PATH.'data/consumer.php';
+include_once BASE_PATH.'common/common.php';
+include_once BASE_PATH.'common/RabbitMQCommand.php';
 
 $rabbitConfig = (new CommonConfig())->rabbitConfig();
 $exchange_name = 'ex_corona';

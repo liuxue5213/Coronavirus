@@ -1,5 +1,6 @@
 <?php
-require_once './data/getData.php';
+define('BASE_PATH', str_replace('\\','/',realpath(dirname(__FILE__).'/'))."/");
+include_once BASE_PATH.'./data/getData.php';
 // $nav = isset($_REQUEST['nav']) ? $_REQUEST['nav']: '';
 $nowDay = date('Y-m-d');
 $dt = new DataInfo();
