@@ -1,5 +1,7 @@
 <?php
-define('BASE_PATH', str_replace('\\','/',realpath(dirname(__FILE__).'/'))."/");
+if (defined('BASE_PATH')) {
+    define('BASE_PATH', str_replace('\\','/',realpath(dirname(__FILE__).'/'))."/");
+}
 require_once BASE_PATH.'./common/QueryList.php';
 require_once BASE_PATH.'./common/phpQuery.php';
 require_once BASE_PATH.'./common/common.php';
