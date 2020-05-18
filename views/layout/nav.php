@@ -10,22 +10,22 @@
     </span>
 	<div class="collapse navbar-collapse" id="navbarTogglerDemo03">
 		<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-			<li class="nav-item <?php echo empty($nav) || $nav == 'index' ? 'active': '';?>">
+			<li class="nav-item ">
 				<a class="nav-link text-white" href="index.php"><b>Data</b></a>
 			</li>
-			<li class="nav-item <?php echo $nav == 'map' ? 'active': '';?>">
+			<li class="nav-item ">
 				<a class="nav-link text-white" href="map.php"><b>Map</b></a>
 			</li>
-			<li class="nav-item <?php echo $nav == 'map' ? 'active': '';?>">
+			<li class="nav-item ">
 				<a class="nav-link text-white" href="wiki.php"><b>Wiki</b></a>
 			</li>
-			<li class="nav-item <?php echo $nav == 'baidu' ? 'active': '';?>">
+			<li class="nav-item ">
 				<a class="nav-link text-white" href="baidu.php"><b>Baidu</b></a>
 			</li>
-			<li class="nav-item <?php echo $nav == 'subscribe' ? 'active': '';?>">
+			<li class="nav-item ">
 				<a class="nav-link text-white" data-toggle="modal" data-target="#Subscribe" style="cursor: pointer;"><b>Subscribe</b></a>
 			</li>
-            <li class="nav-item <?php echo $nav == 'about' ? 'active': '';?>">
+            <li class="nav-item ">
                 <a class="nav-link text-white" href="about.php"><b>About</b></a>
             </li>
 		</ul>
