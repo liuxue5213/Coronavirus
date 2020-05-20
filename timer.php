@@ -8,12 +8,12 @@ $prod = new Producer();
 $prod->worldInfo();
 var_dump('world refresh success');
 
-// $prod->countryInfo();
-// var_dump('country refresh success');
+$prod->countryInfo();
+var_dump('country refresh success');
 
-// $baidu = new BaiduProd();
-// $data = $baidu->index();
-// var_dump('baidu refresh success');
+$baidu = new BaiduProd();
+$data = $baidu->index();
+var_dump('baidu refresh success');
  
 // $prod->detail('italy');
 // var_dump('country refresh success');
