@@ -78,7 +78,7 @@ class Producer
         $rang = '#nav-tabContent tbody tr';
         $hj = QueryList::Query($url, $rules, $rang);
         $data = $hj->data;
-        
+
         if ($data) {
             $rabbitConfig = (new CommonConfig())->rabbitConfig();
             $exchange_name = 'ex_corona';
@@ -119,13 +119,13 @@ class Producer
             }
 
             //世界信息
-            if (count($world['data'])) {
+            if (isset($world['data']) && count($world['data'])) {
                 $world['name'] = 'world';
                 $ra->send(serialize($world));
             }
 
             //城市列表
-            if (count($country['data'])) {
+            if (isset($country['data']) && count($country['data'])) {
                 $country['name'] = 'coronaInfo';
                 $ra->send(serialize($country));
             }
