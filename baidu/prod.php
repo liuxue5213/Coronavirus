@@ -3,7 +3,7 @@
  * @Author: anchen
  * @Date:   2020-03-27 17:06:30
  * @Last Modified by:   anchen
- * @Last Modified time: 2020-04-18 14:34:49
+ * @Last Modified time: 2020-05-23 11:04:11
  */
 require_once './common/phpQuery.php';
 require_once './common/QueryList.php';
@@ -25,6 +25,7 @@ class BaiduProd
     {
         $curl = new Curl();
         $data = $curl->curlPost($this->url);
+
         if ($data) {
             //正则提取json数据
             preg_match_all('/id=\"captain-config\">(.*?)<\/script>+/', $data, $tmpArr);
@@ -93,7 +94,7 @@ class BaiduProd
                 $sRows['data'][$i]['content'] = $this->getRealtimeData(sprintf($this->hotwordUrl, '全国', time()*1000));
                 $i++;
 
-                if (count($sRows)) {
+                if ($sRows) {
                     $sRows['name'] = $this->key;
                     $ra->send(serialize($sRows));
                 }
