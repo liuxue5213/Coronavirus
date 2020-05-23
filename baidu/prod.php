@@ -3,7 +3,7 @@
  * @Author: anchen
  * @Date:   2020-03-27 17:06:30
  * @Last Modified by:   anchen
- * @Last Modified time: 2020-05-23 11:04:11
+ * @Last Modified time: 2020-05-23 11:06:22
  */
 require_once './common/phpQuery.php';
 require_once './common/QueryList.php';
@@ -94,10 +94,8 @@ class BaiduProd
                 $sRows['data'][$i]['content'] = $this->getRealtimeData(sprintf($this->hotwordUrl, '全国', time()*1000));
                 $i++;
 
-                if ($sRows) {
-                    $sRows['name'] = $this->key;
-                    $ra->send(serialize($sRows));
-                }
+                $sRows['name'] = $this->key;
+                $ra->send(serialize($sRows));
             } else {
                 $msg = "<百度>正则提取json数据失败:".date('Y-m-d h:i:s')."\r\n";
                 logger::addlog($msg);
