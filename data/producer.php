@@ -35,7 +35,6 @@ class Producer
         $rang = '.container .col-md-8';
         $hj = QueryList::Query($url, $rules, $rang);
         $data = $hj->data;
-
         if (isset($data[0])) {
             $rabbitConfig = (new CommonConfig())->rabbitConfig();
             $exchange_name = 'ex_corona';
@@ -60,19 +59,19 @@ class Producer
     {
         $url = 'https://www.worldometers.info/coronavirus';
         $rules = array(
-            'country' => ['td:eq(0)', 'text'],
-            'country_url' => ['td:eq(0)>a', 'href', 'text'],
-            'total_cases' => ['td:eq(1)', 'text'],
-            'new_cases' => ['td:eq(2)', 'text'],
-            'total_deaths' => ['td:eq(3)', 'text'],
-            'new_deaths' => ['td:eq(4)', 'text'],
-            'total_recovered' => ['td:eq(5)', 'text'],
-            'active_cases' => ['td:eq(6)', 'text'],
-            'serious_critical' => ['td:eq(7)', 'text'],
-            'tot_cases_1m' => ['td:eq(8)', 'text'],
-            'tot_deaths_1m' => ['td:eq(9)', 'text'],
-            'tot_test' => ['td:eq(10)', 'text'],
-            'tot_test_1m' => ['td:eq(11)', 'text'],
+            'country' => ['td:eq(1)', 'text'],
+            'country_url' => ['td:eq(1)>a', 'href', 'text'],
+            'total_cases' => ['td:eq(2)', 'text'],
+            'new_cases' => ['td:eq(3)', 'text'],
+            'total_deaths' => ['td:eq(4)', 'text'],
+            'new_deaths' => ['td:eq(5)', 'text'],
+            'total_recovered' => ['td:eq(6)', 'text'],
+            'active_cases' => ['td:eq(7)', 'text'],
+            'serious_critical' => ['td:eq(8)', 'text'],
+            'tot_cases_1m' => ['td:eq(9)', 'text'],
+            'tot_deaths_1m' => ['td:eq(10)', 'text'],
+            'tot_test' => ['td:eq(11)', 'text'],
+            'tot_test_1m' => ['td:eq(12)', 'text'],
             'callback' => array('Producer', 'checkNum')
         );
         $rang = '#nav-tabContent tbody tr';
