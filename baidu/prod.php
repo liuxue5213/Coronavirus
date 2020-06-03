@@ -3,14 +3,14 @@
  * @Author: anchen
  * @Date:   2020-03-27 17:06:30
  * @Last Modified by:   anchen
- * @Last Modified time: 2020-05-23 11:06:22
+ * @Last Modified time: 2020-06-03 08:57:35
  */
-require_once './common/phpQuery.php';
-require_once './common/QueryList.php';
-require_once './common/curl.php';
-require_once './common/common.php';
-require_once './common/logger.php';
-require_once './common/RabbitMQCommand.php';
+require_once '../common/phpQuery.php';
+require_once '../common/QueryList.php';
+require_once '../common/curl.php';
+require_once '../common/common.php';
+require_once '../common/logger.php';
+require_once '../common/RabbitMQCommand.php';
 
 use QL\QueryList;
 
