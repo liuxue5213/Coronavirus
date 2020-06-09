@@ -3,7 +3,7 @@
  * @Author: anchen
  * @Date:   2020-03-27 17:06:30
  * @Last Modified by:   anchen
- * @Last Modified time: 2020-06-03 09:00:38
+ * @Last Modified time: 2020-06-09 16:40:24
  */
 if (!defined('BASE_PATH')) {
     define('BASE_PATH', str_replace('\\','/',realpath(dirname(__FILE__).'/'))."/");
@@ -19,7 +19,6 @@ use QL\QueryList;
 
 class BaiduProd
 {
-    protected $key = 'baidu';
     private $url = 'https://voice.baidu.com/act/newpneumonia/newpneumonia/?from=osari_pc_1';
     private $realUrl = 'https://opendata.baidu.com/data/inner?tn=reserved_all_res_tn&dspName=iphone&from_sf=1&dsp=iphone&resource_id=28565&alr=1&query=%s&cb=jsonp_%s_39356';
     private $hotwordUrl = 'https://opendata.baidu.com/api.php?query=%s&resource_id=39258&tn=wisetpl&format=json&sa=osari_hotword_tab&cb=jsonp_%s_69146';
@@ -97,8 +96,9 @@ class BaiduProd
                 $sRows['data'][$i]['content'] = $this->getRealtimeData(sprintf($this->hotwordUrl, '全国', time()*1000));
                 $i++;
 
-                $sRows['name'] = $this->key;
+                $sRows['name'] = 'baidu';
                 $ra->send(serialize($sRows));
+                var_dump('baidu refresh success');
             } else {
                 $msg = "<百度>正则提取json数据失败:".date('Y-m-d h:i:s')."\r\n";
                 logger::addlog($msg);
