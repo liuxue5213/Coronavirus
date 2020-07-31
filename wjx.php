@@ -35,7 +35,6 @@ function check($rows, $str)
     return $res;
 }
 
-
 $url = 'https://ks.wjx.top/jq/85916726.aspx';
 $rules = array(
     // 'last_updated' => ['.div_title_question div:eq(1)', 'text'],
@@ -48,9 +47,11 @@ $data = QueryList::Query($url, $rules, $rang,'ISO-8859-1','UTF-8')->data;
 
 if ($data) {
     $result = array();
-    $rows = file_get_contents('C:\Users\Administrator\Desktop\Coronavirus\ccccc.md');
+    $rows = file_get_contents('./ccccc.md');
     foreach ($data as $key => $val) {
         $tit = rtrim(ltrim(preg_replace("/[0-9]/", "", $val['title']), '.'), '。');
+        // $val['title'] = mb_convert_encoding($val['title'],'utf-8','gbk');
+        // $tit = iconv('gb2312', 'utf8', $val['title']);
         if (strstr($tit, ',') != false) {
             $tmpOne = explode(',', $tit);
             foreach ($tmpOne as $v) {
@@ -64,10 +65,6 @@ if ($data) {
                 $result = array_merge($result, check($rows, mb_substr($tit, 0, mb_strlen($tit, 'UTF-8') / 2, 'utf-8')));
             }
         }
-        // print_r(array_unique($result));
-		// $val['title'] = mb_convert_encoding($val['title'],'utf-8','gbk');
-        // $tit = iconv('gb2312', 'utf8', $val['title']);
     }
-
     print_r(array_unique($result));
 }
