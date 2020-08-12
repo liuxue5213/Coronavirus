@@ -1,3 +1,68 @@
+1. 表结构逻辑说明
+base库
+company:mysql_user不同公司连接不同的ci库. id:公司ID字段注意,不是以前的document_id,也不是company_id; erp_mysql_user有房源版本的CI对应的erp的租赁库;
+erp_company_id:有房源版本CI对应的租赁公司id.
+join_qr_cde:员工加入公司的二维码地址
+wd_mp_user:用户关注公众号的用户信息.用户只要关注CI找房公众号就能直接获取用户的资料信息,包括unioid
+wd_union_user. 只要进入微店或者小程序的用户 通过unionid 确定一个人的唯一标志.type:区分是访客还是经纪人0,1;
+erp_id:如果是经纪人确定哪个公司的那个人10:1;
+cid,uid:访客最后一次访问的哪家公司的哪个经纪人
+
+erp库
+客户表.wd_client. uid与open_id=>user_key 唯一性标志. open_id 为平台的unionid.
+
+日志表
+wd_client_visit_log:一个客户一个经纪人一天只记录一次.[访客日志]
+wd_client_visit_house_log:一个客户一个房源一天只记录一次[客户流量房源日志,记录总时长和次数]
+wd_client_visit_material_log:一个客户一天一个图文只记录一次[客户流量图文信息日志]
+
+群
+小程序分享自己的店铺房源到微信群,然后自己再打开,经纪人填写群名称备注.[我们无法直接获取群名称]
+
+房源和房源相关表
+买卖房源,租赁房源,买卖房源图片和租赁房源图片.如果是有房源版本,租赁房源图片等同于买卖房源图片
+
+2. 账户体系
+部署时通过unionid确定第一个人.unioid通过wd_mp_user 获得.
+用户必须先关注公众号,通过加入公司二维码,经过手机号认证确定加入公司.手机号为用户的授权标志.授权成功后,可以获取手机号和经纪人的unionid,更新wd_union_user 确定用户属于哪个公司的哪个人.
+
+访客第一次进入 默认访问公司10:1.[图片]
+通过地址栏的不同 确定进入哪个公司的哪个人的店铺
+w:微店H5      w\Wd
+m:访客小程序  w\mini
+u:经纪人小程序后台  w\broker
+注意多看看 controllers
+
+3. 小程序生成二维码的方法
+w/mp/MnQrCode.php
+getUnLimitStream:取没有限制的二维码 有限制要求:scene 最大32个可见字符[用于经纪人个人店铺,房源海报]
+createWxQrcode:有10w限制[用户加入公司二维码]
+微信扫码进入小程序的方法:/m/index
+
+4. 微信公众号的一些方法
+w/mp/MpTools.php
+通过code 获取用户信息
+发送模板消息   w/mp/MpMsg.php
+h5调用微信内部js方法
+公众号设置自动回复[主要时获取 关注信息]
+小程序如何打开H5页面
+
+w/mini/MnWap.php
+打开H5地图
+图文素材详细
+计算器
+聊天
+
+6. 房源爬虫的方法
+apps/wd/application/controllers/house.php 主要的接口
+apps\wd\application\views\parse 前端目录
+登陆:login 通过爬虫任务的登陆凭证获取
+w/WdErp/House/HouseSite.php 可以爬取的站点
+apps/wd/application/views/parse/vb.phtml  VB页面的分析页面
+
+7. 海报的生成方法
+w/broker/MBHousePoster.php
+w/broker/MBPosterImage.php
 
 
 
